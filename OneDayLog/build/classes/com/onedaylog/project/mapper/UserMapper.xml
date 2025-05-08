@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onedaylog.project.dao.UserDAO">
+
+    <!-- 1. 회원가입 (INSERT) -->
+    <insert id="insertUser" parameterType="com.onedaylog.project.dto.UserDTO">
+        INSERT INTO USERS (
+            USER_ID,
+            EMAIL,
+            PASSWORD,
+            NAME
+        ) VALUES (
+            USERS_SEQ.NEXTVAL,
+            #{email},
+            #{password},
+            #{name}
+        )
+    </insert>
+
+    <!-- 2. 로그인 (이메일 + 비밀번호로 사용자 조회) -->
+    <select id="findUserByEmailAndPassword" parameterType="com.onedaylog.project.dto.UserDTO"
+            resultType="com.onedaylog.project.dto.UserDTO">
+        SELECT 
+            USER_ID AS userId,
+            EMAIL AS email,
+            PASSWORD AS password,
+            NAME AS name,
+            TO_CHAR(CREATED_AT, 'YYYY-MM-DD HH24:MI:SS') AS createdAt
+        FROM USERS
+        WHERE EMAIL = #{email}
+          AND PASSWORD = #{password}
+    </select>
+
+    <!-- 3. 이메일 중복 확인 -->
+    <select id="findUserByEmail" parameterType="String"
+            resultType="com.onedaylog.project.dto.UserDTO">
+        SELECT 
+            USER_ID AS userId,
+            EMAIL AS email,
+            PASSWORD AS password,
+            NAME AS name,
+            TO_CHAR(CREATED_AT, 'YYYY-MM-DD HH24:MI:SS') AS createdAt
+        FROM USERS
+        WHERE EMAIL = #{email}
+    </select>
+
+</mapper>
