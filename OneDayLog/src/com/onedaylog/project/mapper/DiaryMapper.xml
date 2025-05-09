@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onedaylog.project.dao.DiaryDAO">
+
+	<insert id="insertDiary"
+		parameterType="com.onedaylog.project.dto.DiaryDTO">
+		INSERT INTO DIARY (DIARY_ID, USER_ID, DIARY_DATE, CONTENT)
+		VALUES (DIARY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{content})
+	</insert>
+
+	<select id="getDiaryListByUserId" parameterType="int"
+		resultType="com.onedaylog.project.dto.DiaryDTO">
+		SELECT DIARY_ID AS diaryId,
+		USER_ID,
+		CONTENT,
+		TO_CHAR(DIARY_DATE, 'YYYY-MM-DD') AS diaryDate
+		FROM DIARY
+		WHERE USER_ID = #{userId}
+		ORDER BY DIARY_DATE DESC
+	</select>
+
+	<delete id="deleteDiary" parameterType="int">
+		DELETE FROM DIARY WHERE DIARY_ID = #{diaryId}
+	</delete>
+
+</mapper>

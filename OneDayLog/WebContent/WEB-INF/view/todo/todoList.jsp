@@ -1,110 +1,64 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/view/common/header.jsp" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>OneDayLog - 할 일 리스트</title>
-    <link rel="stylesheet" href="css/main.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f2f2f2;
-            padding: 30px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        ul.todo-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        ul.todo-list li {
-            padding: 15px 10px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        ul.todo-list li:last-child {
-            border-bottom: none;
-        }
-
-        .task-text {
-            flex-grow: 1;
-            margin-left: 10px;
-            font-size: 16px;
-        }
-
-        .task-completed {
-            text-decoration: line-through;
-            color: gray;
-        }
-
-        .btn-add {
-            display: block;
-            margin: 30px auto 0;
-            width: 200px;
-            padding: 15px;
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .btn-add:hover {
-            background-color: #1e7e34;
-        }
-    </style>
-    <script>
-        function toggleTask(checkbox) {
-            const textElement = checkbox.parentElement.querySelector('.task-text');
-            if (checkbox.checked) {
-                textElement.classList.add('task-completed');
-            } else {
-                textElement.classList.remove('task-completed');
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<title>OneDayLog - 오늘의 약속</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/onedaylog-style.css">
+<script src="${pageContext.request.contextPath}/js/onedaylog-script.js?v=1" defer></script>
+<script src="js/todo.js"></script>
 </head>
 <body>
-
 <div class="container">
-    <h2>📝 오늘의 할 일</h2>
-
-    <ul class="todo-list">
-        <li>
-            <input type="checkbox" onclick="toggleTask(this)">
-            <span class="task-text">일기 쓰기</span>
-        </li>
-        <li>
-            <input type="checkbox" onclick="toggleTask(this)">
-            <span class="task-text">포트폴리오 정리</span>
-        </li>
-        <li>
-            <input type="checkbox" onclick="toggleTask(this)">
-            <span class="task-text">운동 30분 하기</span>
-        </li>
-    </ul>
-
-    <a class="btn-add" href="todoWrite.jsp">➕ 새 할 일 추가</a>
+	<div class="section">
+		<h2><span class="emoji">📌</span> 오늘 할 일</h2>
+		<ul class="todo-list">
+			<c:forEach var="todo" items="${todoList}">
+				<c:if test="${todo.category eq 'today'}">
+					<li>
+						<input type="checkbox" <c:if test="${todo.completed}">checked</c:if> onclick="toggleTaskAjax(this, ${todo.todoId})" />
+						<span class="task-text <c:if test='${todo.completed}'>task-completed</c:if>">${todo.task}</span>
+						<button class="delete-btn" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
+					</li>
+				</c:if>
+			</c:forEach>
+		</ul>
+	</div>
+	<div class="section">
+		<h2><span class="emoji">📅</span> 내일 할 일</h2>
+		<ul class="todo-list">
+			<c:forEach var="todo" items="${todoList}">
+				<c:if test="${todo.category eq 'tomorrow'}">
+					<li>
+						<input type="checkbox" <c:if test="${todo.completed}">checked</c:if> onclick="toggleTaskAjax(this, ${todo.todoId})" />
+						<span class="task-text <c:if test='${todo.completed}'>task-completed</c:if>">${todo.task}</span>
+						<button class="delete-btn" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
+					</li>
+				</c:if>
+			</c:forEach>
+		</ul>
+	</div>
+	<div class="section">
+		<h2><span class="emoji">⏳</span> 나중에 할 일</h2>
+		<ul class="todo-list">
+			<c:forEach var="todo" items="${todoList}">
+				<c:if test="${todo.category eq 'later'}">
+					<li>
+						<input type="checkbox" <c:if test="${todo.completed}">checked</c:if> onclick="toggleTaskAjax(this, ${todo.todoId})" />
+						<span class="task-text <c:if test='${todo.completed}'>task-completed</c:if>">${todo.task}</span>
+						<button class="delete-btn" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
+					</li>
+				</c:if>
+			</c:forEach>
+		</ul>
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-add" href="todoWrite.action">➕ 새 리스트 추가</a>
+		<a class="btn btn-back" href="main.action">← 메인으로</a>
+	</div>
 </div>
-
 </body>
 </html>

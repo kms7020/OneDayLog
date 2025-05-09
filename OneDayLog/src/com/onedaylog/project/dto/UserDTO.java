@@ -15,6 +15,7 @@ public class UserDTO
         this.createdAt = createdAt;
     }
     
+    // Getter/Setter
 	public int getUserId()
 	{
 		return userId;

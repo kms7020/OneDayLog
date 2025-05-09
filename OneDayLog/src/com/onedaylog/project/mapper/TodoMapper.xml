@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onedaylog.project.dao.TodoDAO">
+
+	<insert id="insertTodo"
+		parameterType="com.onedaylog.project.dto.TodoDTO">
+		INSERT INTO TODO (TODO_ID, USER_ID, TASK, CATEGORY,
+		COMPLETED)
+		VALUES (TODO_SEQ.NEXTVAL, #{userId}, #{task}, #{category},
+		0)
+	</insert>
+
+	<select id="getTodoList" parameterType="int"
+		resultType="com.onedaylog.project.dto.TodoDTO">
+		SELECT TODO_ID AS todoId,
+		USER_ID, 
+		TASK, 
+		COMPLETED, 
+		CATEGORY
+		FROM TODO
+		WHERE USER_ID = #{userId}
+		ORDER BY TODO_ID DESC
+	</select>
+
+	<update id="updateTodoStatus">
+		UPDATE TODO
+		SET COMPLETED = #{param2}
+		WHERE TODO_ID =
+		#{param1}
+	</update>
+
+	<delete id="deleteTodo" parameterType="int">
+		DELETE FROM TODO WHERE
+		TODO_ID = #{todoId}
+	</delete>
+
+	<update id="updateTodoCompleted"
+		parameterType="com.onedaylog.project.dto.TodoDTO">
+		UPDATE TODO
+		SET COMPLETED = #{completed}
+		WHERE TODO_ID =
+		#{todoId}
+	</update>
+</mapper>
