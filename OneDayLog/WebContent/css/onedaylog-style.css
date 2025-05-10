@@ -79,18 +79,24 @@ input[type="checkbox"] {
 }
 
 .task-text {
-  flex: 1;
-  font-size: 16px;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+    flex: 1;
+    font-size: 16px !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
 }
 
 .task-completed {
-  text-decoration: line-through;
-  color: var(--subtext);
-  opacity: 0.7;
+	text-decoration: line-through;
+  	color: var(--subtext);
+  	opacity: 0.7;
 }
-
+.element.style {
+	font-size: 18px !important;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;		
+}
 textarea, input[type="text"], select {
   width: 100%;
   padding: 12px 14px;
@@ -101,11 +107,35 @@ textarea, input[type="text"], select {
   background: var(--accent);
   color: var(--text);
   transition: background var(--transition), color var(--transition);
+  font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
 }
 
 textarea {
-  min-height: 180px;
+  width: 100%;
+  min-height: 200px;
+  padding: 16px 20px;
+  font-size: 20px !important;
+  font-family: 'Nanum Pen Script', 'Segoe UI', 'Noto Sans KR', cursive;
+  background: #f9fafb;
+  color: #333333;
+  border: 2px solid #ffdb7b;
+  border-radius: 16px;
+  line-height: 1.8;
   resize: vertical;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #f2c94c;
+  background-color: #fffde8;
+}
+
+.diary-content {
+  font-family: 'Nanum Pen Script', 'Noto Sans KR', cursive !important;
+  font-size: 20px !important;
+  line-height: 1.7;
 }
 
 .diary-entry {
@@ -122,7 +152,7 @@ textarea {
   margin-bottom: 10px;
 }
 
-/* 삭제 버튼 (공통) */
+/* 삭제 버튼 */
 .delete-btn {
   background: transparent;
   border: none;
@@ -156,7 +186,6 @@ ul.todo-list li .delete-btn {
   flex-wrap: wrap;
 }
 
-/* ✅ 리마스터된 버튼 스타일 */
 .btn, .btn-back, .toggle-mode,
 a.btn, a.btn-back, a.toggle-mode {
   display: inline-flex;
@@ -227,4 +256,48 @@ a.btn, a.btn-back, a.toggle-mode {
   .btn, .btn-back, .toggle-mode {
     width: 100%;
   }
+  /* 공통 input 스타일 정리 */
+input[type="date"].styled-date {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: var(--round);
+  padding: 12px 14px;
+  font-size: 15px;
+  color: var(--text);
+  font-family: 'Noto Sans KR', 'Gowun Dodum', sans-serif;
+  transition: background var(--transition), border var(--transition);
+  width: 100%;
+  max-width: 260px;
+}
+
+/* 달력 아이콘 제거하고 사용자 지정 스타일 유지 */
+input[type="date"].styled-date::-webkit-calendar-picker-indicator {
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 18px;
+}
+
+input[type="date"].styled-date:hover {
+  background-color: var(--task-hover);
+  border-color: var(--primary-hover);
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+  
+  
 }

@@ -1,124 +1,117 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="UTF-8" %>
-<%@ page import="java.util.*, java.text.*" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+	import="java.util.*, java.text.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+	List<com.onedaylog.project.dto.DdayDTO> ddayList = 
+	(List<com.onedaylog.project.dto.DdayDTO>) request.getAttribute("ddayList");
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+// 오늘 날짜를 자정으로 초기화
+Calendar cal = Calendar.getInstance();
+cal.set(Calendar.HOUR_OF_DAY, 0);
+cal.set(Calendar.MINUTE, 0);
+cal.set(Calendar.SECOND, 0);
+cal.set(Calendar.MILLISECOND, 0);
+Date today = cal.getTime();
+%>
+
+<%@ include file="/WEB-INF/view/common/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>OneDayLog - D-Day 목록</title>
-    <link rel="stylesheet" href="css/main.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f2f2f2;
-            padding: 30px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .dday-entry {
-            padding: 20px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .dday-title {
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .dday-date {
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .dday-count {
-            margin-top: 10px;
-            font-size: 20px;
-            color: #dc3545;
-        }
-
-        .btn-add {
-            display: block;
-            margin: 30px auto 0;
-            width: 200px;
-            padding: 15px;
-            background-color: #ffc107;
-            color: black;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .btn-add:hover {
-            background-color: #e0a800;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>OneDayLog - D-Day 목록</title>
+<script src="${pageContext.request.contextPath}/js/main.js" defer></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/onedaylog-style.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/js/onedaylog-script.js"
+	defer></script>
 </head>
 <body>
 
-<div class="container">
-    <h2>📆 D-Day 목록</h2>
+	<div class="container">
+		<h2>📅 D-Day 목록</h2>
 
-    <%
-        class DdayItem {
-            String title;
-            String date;
+		<!-- 🔽 정렬 방식 선택 -->
+		<form action="ddayList.action" method="get"
+			style="text-align: right; margin-bottom: 20px;">
+			<select name="order" onchange="this.form.submit()"
+				style="padding: 6px; font-size: 14px;">
+				<option value="asc" ${param.order == 'asc' ? 'selected' : ''}>날짜
+					빠른 순</option>
+				<option value="desc" ${param.order == 'desc' ? 'selected' : ''}>날짜
+					늦은 순</option>
+			</select>
+		</form>
 
-            DdayItem(String title, String date) {
-                this.title = title;
-                this.date = date;
-            }
-        }
+		<%
+			for (com.onedaylog.project.dto.DdayDTO item : ddayList)
+		{
+			Date ddayDate = item.getTargetDate();
+			long diffMillis = ddayDate.getTime() - today.getTime();
+			long diffDays = diffMillis / (1000 * 60 * 60 * 24);
 
-        // 테스트용 D-Day 목록
-        List<DdayItem> ddayList = new ArrayList<>();
-        ddayList.add(new DdayItem("면접일", "2025-05-20"));
-        ddayList.add(new DdayItem("여행 출발", "2025-06-01"));
+			String highlightStyle = "";
+			if (diffDays == 0)
+			{
+				highlightStyle = "color: #28a745; font-weight: bold;"; // 오늘
+			} else if (diffDays > 0 && diffDays <= 3)
+			{
+				highlightStyle = "color: #dc3545; font-weight: bold;"; // 임박
+			} else if (diffDays < 0)
+			{
+				highlightStyle = "color: #888;";
+			}
+		%>
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date today = new Date();
+		<!-- 🔽 각 D-Day 카드 -->
+		<div class="diary-entry task-text">
+			<div class="dday-title"
+				style="font-size: 18px; font-weight: bold; margin-bottom: 6px;">
+				<%=item.getTitle()%>
+			</div>
+			<div class="dday-date"
+				style="color: var(- -subtext); margin-bottom: 6px;">
+				일정일:
+				<%=sdf.format(ddayDate)%>
+			</div>
+			<div class="dday-count" style="<%=highlightStyle%> font-size: 20px;">
+				<%
+					if (diffDays > 0)
+				{
+					out.print("D-" + diffDays);
+				} else if (diffDays == 0)
+				{
+					out.print("D-DAY");
+				} else
+				{
+					out.print("D+" + Math.abs(diffDays));
+				}
+				%>
+			</div>
 
-        for (DdayItem item : ddayList) {
-            Date ddayDate = sdf.parse(item.date);
-            long diffMillis = ddayDate.getTime() - today.getTime();
-            long diffDays = diffMillis / (1000 * 60 * 60 * 24);
-    %>
+			<!-- 🔽 삭제 버튼 -->
+			<form action="ddayDelete.action" method="post">
+				<input type="hidden" name="ddayId" value="<%=item.getDdayId()%>">
+				<button type="submit" class="delete-btn" title="삭제">x</button>
+			</form>
+		</div>
 
-    <div class="dday-entry">
-        <div class="dday-title"><%= item.title %></div>
-        <div class="dday-date">일정일: <%= item.date %></div>
-        <div class="dday-count">
-            <%
-                if (diffDays > 0) {
-                    out.print("D-" + diffDays);
-                } else if (diffDays == 0) {
-                    out.print("🎉 오늘!");
-                } else {
-                    out.print("D+" + Math.abs(diffDays));
-                }
-            %>
-        </div>
-    </div>
+		<%
+			}
+		%>
 
-    <%
-        }
-    %>
-
-    <a class="btn-add" href="ddayWrite.jsp">➕ D-Day 추가</a>
-</div>
+		<!-- 🔽 추가 버튼 -->
+		<div class="btn-group"
+			style="justify-content: center; margin-top: 32px;">
+			<a href="ddayWrite.action" class="btn">➕ D-Day 추가</a> <a
+				class="btn btn-back" href="main.action">←홈으로</a>
+		</div>
+	</div>
 
 </body>
 </html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onedaylog.project.dao.DdayDAO">
+
+	<insert id="insertDday"
+		parameterType="com.onedaylog.project.dto.DdayDTO">
+		INSERT INTO DDAY (DDAY_ID, USER_ID, TITLE, TARGET_DATE)
+		VALUES (DDAY_SEQ.NEXTVAL, #{userId}, #{title}, #{targetDate})
+	</insert>
+
+	<select id="selectUpcomingDdayByUserId" parameterType="int"
+		resultType="com.onedaylog.project.dto.DdayDTO">
+		SELECT DDAY_ID AS ddayId,
+		USER_ID AS userId,
+		TITLE,
+		TARGET_DATE AS targetDate,
+		CREATED_AT AS createdAt,
+		IMPORTANT
+		FROM DDAY
+		WHERE
+		USER_ID = #{userId}
+		<!-- AND TARGET_DATE >= TRUNC(SYSDATE) -->
+		ORDER BY IMPORTANT DESC, TARGET_DATE ASC
+	</select>
+
+	<select id="selectUpcomingDdayDesc" parameterType="int"
+		resultType="com.onedaylog.project.dto.DdayDTO">
+		SELECT DDAY_ID AS ddayId,
+		USER_ID AS userId,
+		TITLE,
+		TARGET_DATE AS targetDate,
+		CREATED_AT AS createdAt,
+		IMPORTANT
+		FROM DDAY
+		WHERE
+		USER_ID = #{userId}
+		<!-- AND TARGET_DATE >= TRUNC(SYSDATE) -->
+		ORDER BY IMPORTANT DESC, TARGET_DATE ASC
+	</select>
+
+	<select id="selectTop3UpcomingDday" parameterType="int"
+		resultType="com.onedaylog.project.dto.DdayDTO">
+		SELECT *
+		FROM (
+		SELECT DDAY_ID AS ddayId,
+		USER_ID AS userId,
+		TITLE,
+		TARGET_DATE AS targetDate,
+		CREATED_AT AS createdAt,
+		IMPORTANT
+		FROM
+		DDAY
+		WHERE USER_ID = #{userId}
+		<!-- AND TARGET_DATE >= TRUNC(SYSDATE) -->
+		ORDER BY IMPORTANT DESC, TARGET_DATE ASC
+		)
+		WHERE ROWNUM &lt;= 3
+	</select>
+
+	<update id="toggleImportant" parameterType="int">
+		UPDATE DDAY
+		SET
+		IMPORTANT = CASE WHEN IMPORTANT = 1 THEN 0 ELSE 1 END
+		WHERE DDAY_ID =
+		#{ddayId}
+	</update>
+
+	<delete id="deleteDday" parameterType="int">
+		DELETE FROM DDAY WHERE
+		DDAY_ID = #{ddayId}
+	</delete>
+
+	<select id="selectDdayById" parameterType="int"
+		resultType="com.onedaylog.project.dto.DdayDTO">
+		SELECT DDAY_ID AS ddayId,
+		USER_ID AS userId,
+		TITLE,
+		TARGET_DATE AS targetDate,
+		CREATED_AT AS createdAt,
+		IMPORTANT
+		FROM DDAY
+		WHERE DDAY_ID = #{ddayId}
+	</select>
+
+
+</mapper>

@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>OneDayLog - 오늘의 약속</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/onedaylog-style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/onedaylog-script.js?v=1" defer></script>
 <script src="js/todo.js"></script>
 </head>
@@ -57,7 +59,7 @@
 	</div>
 	<div class="btn-group">
 		<a class="btn btn-add" href="todoWrite.action">➕ 새 리스트 추가</a>
-		<a class="btn btn-back" href="main.action">← 메인으로</a>
+		<a class="btn btn-back" href="main.action">← 홈으로</a>
 	</div>
 </div>
 </body>

@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <title>OneDayLog - 새 리스트 추가</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/onedaylog-style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/onedaylog-script.js" defer></script>
 <script src="${pageContext.request.contextPath}/js/main.js" defer></script>
 </head>
@@ -32,7 +35,7 @@
 
 			<div class="btn-group">
 				<button type="submit" class="btn btn-submit">저장</button>
-				<a href="javascript:history.back();" class="btn btn-back">뒤로가기</a>
+				<a href="javascript:history.back();" class="btn btn-back">취소</a>
 			</div>
 		</form>
 	</div>

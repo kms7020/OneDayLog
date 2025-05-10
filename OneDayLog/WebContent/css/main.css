@@ -5,11 +5,11 @@
     --color-accent: #fad266;
     --color-accent-hover: #f2c94c;
     --color-box: #ffffff;
+    --color-box-soft: #fffbe6;
     --color-border: #e5e7eb;
     --color-danger: #ef4444;
     --radius: 12px;
     --transition-fast: 0.2s ease-in-out;
-    --transition-slow: 0.4s ease;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -17,9 +17,8 @@ body.dark {
     --color-bg: #1e293b;
     --color-text: #f3f4f6;
     --color-subtext: #9ca3af;
-    --color-accent: #fad266;
-    --color-accent-hover: #f2c94c;
     --color-box: #334155;
+    --color-box-soft: #475569;
     --color-border: #475569;
     --color-danger: #f87171;
     --shadow: 0 4px 14px rgba(255, 255, 255, 0.05);
@@ -58,48 +57,123 @@ a:hover {
 
 .menu-button {
     background-color: var(--color-accent);
-    color: #1f2937;
+    color: var(--color-text);
     padding: 18px 20px;
     border-radius: var(--radius);
     font-size: 18px;
     font-weight: 600;
     text-align: center;
     box-shadow: var(--shadow);
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
 }
 
 .menu-button:hover {
     background-color: var(--color-accent-hover);
     transform: translateY(-2px);
-    color: #1f2937; /* 유지: hover 시에도 글씨 유지되도록 */
+    color: var(--color-text);
 }
 
 .dday-box {
     background-color: var(--color-box);
     border: 1px solid var(--color-border);
-    padding: 28px;
+    padding: 28px 32px;
+    margin-top: 40px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     transition: background-color var(--transition-fast);
 }
 
+.dday-box h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text);
+    font-family: 'Nanum Pen Script', 'Noto Sans KR', cursive !important;
+}
+
+.dday-item-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.dday-item-link:hover .dday-item {
+    box-shadow: 0 0 0 2px var(--color-accent);
+}
+
 .dday-item {
-    font-size: 15px;
-    margin-bottom: 12px;
-    color: var(--color-subtext);
+    background-color: var(--color-box-soft);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    will-change: transform, opacity;
+}
+
+.important-move {
+    animation: slideUpFade 0.4s ease forwards;
+}
+
+@keyframes slideUpFade {
+    from {
+        transform: translateY(20px);
+        opacity: 0.3;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.unimportant-move {
+    animation: slideDownFade 0.4s ease forwards;
+}
+
+@keyframes slideDownFade {
+    from {
+        transform: translateY(-20px);
+        opacity: 0.3;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.dday-item .title-group {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: var(--color-text);
+    font-weight: 500;
 }
 
 .dday-count {
     font-weight: bold;
-    color: var(--color-danger);
     font-size: 16px;
+}
+
+.dday-count.dday {
+    color: #d6336c;
+}
+
+.dday-count.upcoming {
+    color: #d9480f;
+}
+
+.dday-count.past {
+    color: #adb5bd;
 }
 
 .toggle-mode {
@@ -112,12 +186,12 @@ a:hover {
     border-radius: var(--radius);
     transition: background-color var(--transition-fast), color var(--transition-fast);
 }
+
 .toggle-mode:hover {
     color: var(--color-text);
     background-color: var(--color-border);
 }
 
-/* 반응형 최적화 */
 @media (max-width: 600px) {
     .container {
         padding: 0 16px;
@@ -128,6 +202,8 @@ a:hover {
     }
     .dday-item {
         font-size: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
     }
 }
-	

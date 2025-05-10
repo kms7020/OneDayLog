@@ -62,3 +62,43 @@ function confirmTodoDelete(todoId) {
 	    form.submit();
 	  }
 	}
+
+//Flatpickr JS 초기화 
+document.addEventListener('DOMContentLoaded', function () {
+	  const targetDateInput = document.querySelector('#targetDate');
+	  if (targetDateInput) {
+	    flatpickr(targetDateInput, {
+	      dateFormat: 'Y-m-d',
+	      locale: 'ko',
+	      defaultDate: 'today',
+	      disableMobile: true
+	    });
+	  }
+	});
+
+// toggle 동작을 수동으로 구현
+document.addEventListener('DOMContentLoaded', function () {
+	  const targetDateInput = document.querySelector('#targetDate');
+	  if (targetDateInput) {
+	    const fp = flatpickr(targetDateInput, {
+	      dateFormat: 'Y-m-d',
+	      locale: 'ko',
+	      defaultDate: 'today',
+	      disableMobile: true,
+	      clickOpens: false  // 직접 열고 닫도록 설정
+	    });
+
+	    let isOpen = false;
+
+	    targetDateInput.addEventListener('click', function () {
+	      if (isOpen) {
+	        fp.close();
+	      } else {
+	        fp.open();
+	      }
+	      isOpen = !isOpen;
+	    });
+	  }
+	});
+
+

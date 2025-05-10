@@ -4,46 +4,44 @@
 
 <mapper namespace="com.onedaylog.project.dao.UserDAO">
 
-    <!-- 1. 회원가입 (INSERT) -->
-    <insert id="insertUser" parameterType="com.onedaylog.project.dto.UserDTO">
-        INSERT INTO USERS (
-            USER_ID,
-            EMAIL,
-            PASSWORD,
-            NAME
-        ) VALUES (
-            USERS_SEQ.NEXTVAL,
-            #{email},
-            #{password},
-            #{name}
-        )
-    </insert>
+	<!-- 1. 회원가입 (INSERT) -->
+	<insert id="insertUser"
+		parameterType="com.onedaylog.project.dto.UserDTO">
+		INSERT INTO USERS (USER_ID, EMAIL, LOGIN_ID, PASSWORD,
+		NAME)
+		VALUES (USERS_SEQ.NEXTVAL, #{email}, #{loginId}, #{password},
+		#{name})
+	</insert>
 
-    <!-- 2. 로그인 (이메일 + 비밀번호로 사용자 조회) -->
-    <select id="findUserByEmailAndPassword" parameterType="com.onedaylog.project.dto.UserDTO"
-            resultType="com.onedaylog.project.dto.UserDTO">
-        SELECT 
-            USER_ID AS userId,
-            EMAIL AS email,
-            PASSWORD AS password,
-            NAME AS name,
-            TO_CHAR(CREATED_AT, 'YYYY-MM-DD HH24:MI:SS') AS createdAt
-        FROM USERS
-        WHERE EMAIL = #{email}
-          AND PASSWORD = #{password}
-    </select>
 
-    <!-- 3. 이메일 중복 확인 -->
-    <select id="findUserByEmail" parameterType="String"
-            resultType="com.onedaylog.project.dto.UserDTO">
-        SELECT 
-            USER_ID AS userId,
-            EMAIL AS email,
-            PASSWORD AS password,
-            NAME AS name,
-            TO_CHAR(CREATED_AT, 'YYYY-MM-DD HH24:MI:SS') AS createdAt
-        FROM USERS
-        WHERE EMAIL = #{email}
-    </select>
+	<!-- 2. 아이디 중복 확인 -->
+	<select id="findUserByLoginId" parameterType="string"
+		resultType="com.onedaylog.project.dto.UserDTO">
+		SELECT * FROM USERS WHERE LOGIN_ID = #{loginId}
+	</select>
+
+
+	<!-- 3. 이메일 중복 확인 -->
+	<select id="findUserByEmail" parameterType="string"
+		resultType="com.onedaylog.project.dto.UserDTO">
+		SELECT * FROM USERS WHERE EMAIL = #{email}
+	</select>
+
+	<!-- 4. 아이디 + 비밀번호로 사용자 조회 -->
+	<select id="findUserByLoginIdAndPassword"
+		parameterType="com.onedaylog.project.dto.UserDTO"
+		resultType="com.onedaylog.project.dto.UserDTO">
+		SELECT USER_ID AS userId,
+		EMAIL,
+		LOGIN_ID AS loginId,
+		PASSWORD,
+		NAME,
+		CREATED_AT AS createdAt
+		FROM USERS
+		WHERE LOGIN_ID =
+		#{loginId}
+		AND PASSWORD = #{password}
+	</select>
+
 
 </mapper>

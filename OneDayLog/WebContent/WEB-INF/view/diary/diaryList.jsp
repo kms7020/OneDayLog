@@ -9,6 +9,9 @@
 <title>OneDayLog - 일기 목록</title>
 <script src="${pageContext.request.contextPath}/js/main.js" defer></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/onedaylog-style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/onedaylog-script.js" defer></script>
 </head>
 <body>
@@ -27,7 +30,7 @@
 
 		<div class="btn-group">
 			<a class="btn" href="diaryWrite.action">✍ 새 일기 작성</a> <a
-				class="btn btn-back" href="main.action">← 메인으로</a>
+				class="btn btn-back" href="main.action">← 홈으로</a>
 		</div>
 	</div>
 

@@ -1,67 +1,38 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/view/common/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>로그인 - OneDayLog</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .login-container {
-            max-width: 400px;
-            margin: 80px auto;
-            padding: 40px;
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        h2 { text-align: center; margin-bottom: 30px; }
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 16px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .btn-submit:hover { background-color: #0056b3; }
-        .signup-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #555;
-            text-decoration: none;
-        }
-        .signup-link:hover { text-decoration: underline; }
-    </style>
+<meta charset="UTF-8">
+<title>로그인 - OneDayLog</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/login-style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/js/onedaylog-script.js"
+	defer></script>
+<script src="${pageContext.request.contextPath}/js/main.js" defer></script>
 </head>
 <body>
 
-<div class="login-container">
-    <h2>로그인</h2>
-    <form action="${pageContext.request.contextPath}/login.action" method="post">
-        <input type="email" name="email" placeholder="이메일" required>
-        <input type="password" name="password" placeholder="비밀번호" required>
-        <button type="submit" class="btn-submit">로그인</button>
-    </form>
-    <a href="${pageContext.request.contextPath}/signup.action" class="signup-link">계정이 없으신가요? 회원가입</a>
-</div>
+	<div class="login-wrapper">
+		<div class="container">
+			<h2>로그인</h2>
+			<form action="${pageContext.request.contextPath}/login.action"
+				method="post">
+				<input type="text" name="loginId" placeholder="아이디" required>
+				<input type="password" name="password" placeholder="비밀번호" required>
+				<button type="submit" class="btn">로그인</button>
+			</form>
+
+			<div style="text-align: center;">
+				<a href="${pageContext.request.contextPath}/signup.action"
+					class="btn-back">계정이 없으신가요? 회원가입</a>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>
