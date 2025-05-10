@@ -14,3 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+//애니메이션 효과 동적 적용 
+document.addEventListener("DOMContentLoaded", function () {
+	const importantItems = document.querySelectorAll(".important-move");
+	const unimportantItems = document.querySelectorAll(".unimportant-move");
+
+	importantItems.forEach(el => {
+		el.classList.add("move-up");
+	});
+	unimportantItems.forEach(el => {
+		el.classList.add("move-down");
+	});
+});

@@ -41,6 +41,7 @@ h2 {
   margin-bottom: 24px;
   border-left: 4px solid var(--primary);
   padding-left: 12px;
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important; 
 }
 
 ul.todo-list, .diary-entry {
@@ -83,7 +84,7 @@ input[type="checkbox"] {
     font-size: 16px !important;
     word-break: break-word;
     overflow-wrap: anywhere;
-    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
+    /* font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important; */
 }
 
 .task-completed {
@@ -107,7 +108,7 @@ textarea, input[type="text"], select {
   background: var(--accent);
   color: var(--text);
   transition: background var(--transition), color var(--transition);
-  font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
+  font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important; 
 }
 
 textarea {
@@ -115,7 +116,6 @@ textarea {
   min-height: 200px;
   padding: 16px 20px;
   font-size: 20px !important;
-  font-family: 'Nanum Pen Script', 'Segoe UI', 'Noto Sans KR', cursive;
   background: #f9fafb;
   color: #333333;
   border: 2px solid #ffdb7b;
@@ -133,9 +133,9 @@ textarea:focus {
 }
 
 .diary-content {
-  font-family: 'Nanum Pen Script', 'Noto Sans KR', cursive !important;
-  font-size: 20px !important;
-  line-height: 1.7;
+  	font-size: 20px !important;
+  	line-height: 1.7;
+	font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important; 
 }
 
 .diary-entry {

@@ -22,7 +22,6 @@
 		FROM DDAY
 		WHERE
 		USER_ID = #{userId}
-		<!-- AND TARGET_DATE >= TRUNC(SYSDATE) -->
 		ORDER BY IMPORTANT DESC, TARGET_DATE ASC
 	</select>
 
@@ -35,10 +34,8 @@
 		CREATED_AT AS createdAt,
 		IMPORTANT
 		FROM DDAY
-		WHERE
-		USER_ID = #{userId}
-		<!-- AND TARGET_DATE >= TRUNC(SYSDATE) -->
-		ORDER BY IMPORTANT DESC, TARGET_DATE ASC
+		WHERE USER_ID = #{userId}
+		ORDER BY IMPORTANT DESC, TARGET_DATE DESC
 	</select>
 
 	<select id="selectTop3UpcomingDday" parameterType="int"
@@ -54,7 +51,6 @@
 		FROM
 		DDAY
 		WHERE USER_ID = #{userId}
-		<!-- AND TARGET_DATE >= TRUNC(SYSDATE) -->
 		ORDER BY IMPORTANT DESC, TARGET_DATE ASC
 		)
 		WHERE ROWNUM &lt;= 3

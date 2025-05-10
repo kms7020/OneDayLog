@@ -1,21 +1,36 @@
 :root {
-  --bg: #f9fafb;
-  --text: #1f2937;
-  --subtext: #6b7280;
-  --primary: #FFDB7B;
-  --primary-hover: #f2c94c;
-  --accent: #f1f3f5;
-  --border: #e5e7eb;
+  --color-bg: #f9fafb;
+  --color-text: #1f2937;
+  --color-subtext: #6b7280;
+  --color-accent: #fad266;
+  --color-accent-hover: #f2c94c;
+  --color-box: #ffffff;
+  --color-box-soft: #fffbe6;
+  --color-border: #e5e7eb;
+  --color-danger: #ef4444;
+  --radius: 12px;
+  --transition-fast: 0.2s ease-in-out;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   --round: 12px;
   --transition: 0.2s ease-in-out;
 }
 
+body.dark {
+  --color-bg: #1e293b;
+  --color-text: #f3f4f6;
+  --color-subtext: #9ca3af;
+  --color-box: #334155;
+  --color-box-soft: #475569;
+  --color-border: #475569;
+  --color-danger: #f87171;
+  --shadow: 0 4px 14px rgba(255, 255, 255, 0.05);
+}
+
 body {
   margin: 0;
-  font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'Segoe UI', 'Noto Sans KR', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
   transition: background var(--transition), color var(--transition);
 }
 
@@ -26,23 +41,51 @@ body {
   padding: 60px 20px 40px;
   box-sizing: border-box;
   min-height: calc(100vh - 80px);
+  position: relative;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+.toggle-mode {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  padding: 6px 12px;
+  color: var(--color-subtext);
+  border-radius: var(--radius);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.toggle-mode:hover {
+  color: var(--color-text);
+  background-color: var(--color-border);
 }
 
 .container {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
+  background: var(--color-box);
   padding: 40px 32px;
   border-radius: var(--round);
   box-shadow: var(--shadow);
   box-sizing: border-box;
+  transition: background-color var(--transition-fast);
 }
 
 h2 {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 28px;
-  border-left: 4px solid var(--primary);
+  border-left: 4px solid var(--color-accent);
   padding-left: 12px;
 }
 
@@ -57,18 +100,17 @@ input[type="password"],
 input[type="text"] {
   padding: 14px 16px;
   font-size: 15px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border);
   border-radius: var(--round);
-  background: var(--accent);
-  color: var(--text);
+  background: var(--color-box-soft);
+  color: var(--color-text);
   transition: background var(--transition), border var(--transition), color var(--transition);
 }
 
 input::placeholder {
-  color: var(--subtext);
+  color: var(--color-subtext);
 }
 
-/* ✅ 중복확인 input + 버튼 묶음 */
 .field-group {
   display: flex;
   flex-direction: column;
@@ -97,7 +139,6 @@ input::placeholder {
   background: #cbd5e1;
 }
 
-/* ✅ 안내 메시지 스타일 */
 .check-msg {
   font-size: 13px;
   margin: 0;
@@ -105,9 +146,8 @@ input::placeholder {
   display: none;
 }
 
-/* 제출 버튼 */
 button[type="submit"].btn {
-  background: var(--primary);
+  background: var(--color-accent);
   color: #2c2c2c;
   font-size: 16px;
   font-weight: 600;
@@ -120,11 +160,10 @@ button[type="submit"].btn {
 }
 
 button[type="submit"].btn:hover {
-  background: var(--primary-hover);
+  background: var(--color-accent-hover);
   transform: translateY(-1px);
 }
 
-/* 로그인 이동 버튼 */
 .btn-back {
   display: inline-block;
   margin-top: 24px;
@@ -142,6 +181,34 @@ button[type="submit"].btn:hover {
   background: #5a6268;
 }
 
+.user-btn {
+  background: transparent;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  gap: 12px;
+  border-radius: var(--round);
+  transition: color var(--transition);
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
+}
+
+.user-btn:hover {
+  color: var(--color-accent-hover);
+}
+
+.user-btn.secondary {
+  background: transparent;
+  color: var(--color-subtext);
+  border: none;
+}
+
+.user-btn.secondary:hover {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
 @media (max-width: 600px) {
   .container {
     margin: 0 16px;
@@ -155,4 +222,20 @@ button[type="submit"].btn:hover {
   .btn, .btn-back {
     width: 100%;
   }
+  
+  .back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: #1f2937;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.back-button:hover {
+  color: #111;
+}
+  
 }

@@ -1,5 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/common/header.jsp"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/view/common/header.jsp" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +14,6 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 
   <!-- 폰트 -->
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
   <!-- Flatpickr 날짜 선택기 -->
@@ -27,13 +27,14 @@
     <h2>📌 D-Day 등록</h2>
 
     <form action="ddayInsert.action" method="post">
+      
       <!-- 제목 입력 -->
-      <div class="field-group ">
+      <div class="field-group">
         <label for="title">제목</label>
         <input type="text" id="title" name="title" required>
       </div>
 
-      <!-- 날짜 입력 -->
+      <!-- 날짜 선택 -->
       <div class="field-group">
         <label for="targetDate">목표 날짜</label>
         <input type="text" id="targetDate" name="targetDate" class="styled-date" placeholder="날짜 선택" required>
@@ -44,8 +45,8 @@
         <button type="submit" class="btn">등록하기</button>
         <a href="ddayList.action" class="btn-back">취소</a>
       </div>
+
     </form>
   </div>
-
 </body>
 </html>

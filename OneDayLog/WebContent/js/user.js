@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ✅ 비밀번호 유효성 + 일치 여부 확인
+    // 비밀번호 유효성 + 일치 여부 확인
     function validatePasswords() {
         const password = passwordInput.value.trim();
         const confirmPassword = confirmPasswordInput.value.trim();
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// ✅ 아이디 중복 확인
+// 아이디 중복 확인
 function checkLoginId() {
     const loginId = document.getElementById('loginId').value.trim();
     const loginIdMsg = document.getElementById('loginIdMsg');
@@ -120,7 +120,7 @@ function checkLoginId() {
         });
 }
 
-// ✅ 이메일 중복 확인
+// 이메일 중복 확인
 function checkEmail() {
     const email = document.getElementById('email').value.trim();
     const emailMsg = document.getElementById('emailMsg');
