@@ -1,19 +1,26 @@
 package com.onedaylog.project.dto;
 
+import java.util.Date;
+
 public class UserDTO
 {
     private int userId;
-    private String email, loginId, password, name, createdAt;
+    private String email, loginId, password, name, profileImage, isDeleted;
+    private Date createdAt, withdrawnAt;
     
     public UserDTO() {}
 
-    public UserDTO(int userId, String email, String password, String name, String createdAt, String loginId) {
+    public UserDTO(int userId, String email, String password, String name,
+    				Date createdAt, Date withdrawnAt, String loginId, String profileImage, String isDeleted) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.name = name;
         this.createdAt = createdAt;
+        this.withdrawnAt = withdrawnAt;
         this.loginId = loginId;
+        this.profileImage = profileImage;
+        this.isDeleted = isDeleted;
     }
 
     // Getter/Setter
@@ -67,14 +74,44 @@ public class UserDTO
 		this.name = name;
 	}
 
-	public String getCreatedAt()
+	public String getProfileImage()
+	{
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage)
+	{
+		this.profileImage = profileImage;
+	}
+
+	public String getIsDeleted()
+	{
+		return isDeleted;
+	}
+
+	public void setIsDeleted(String isDeleted)
+	{
+		this.isDeleted = isDeleted;
+	}
+
+	public Date getCreatedAt()
 	{
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt)
+	public void setCreatedAt(Date createdAt)
 	{
 		this.createdAt = createdAt;
 	}
-      
+
+	public Date getWithdrawnAt()
+	{
+		return withdrawnAt;
+	}
+
+	public void setWithdrawnAt(Date withdrawnAt)
+	{
+		this.withdrawnAt = withdrawnAt;
+	}
+	
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onedaylog.project.dao.AdminDAO">
+
+	<!-- 관리자 로그인 -->
+	<select id="loginAdmin" parameterType="AdminDTO" resultType="AdminDTO">
+		SELECT * FROM ADMIN
+		WHERE ADMIN_LOGIN_ID = #{adminLoginId}
+		AND ADMIN_PASSWORD = #{adminPassword}
+	</select>
+
+	<!-- 전체 회원 수 조회 (탈퇴하지 않은 사용자만) -->
+	<select id="getTotalUserCount" resultType="int">
+		SELECT COUNT(*) FROM USERS WHERE IS_DELETED = 'N'
+	</select>
+
+	<!-- 탈퇴한 회원 수 조회 -->
+	<select id="getWithdrawnUserCount" resultType="int">
+		SELECT COUNT(*) FROM USERS WHERE IS_DELETED = 'Y'
+	</select>
+
+	<!-- 회원 리스트 조회 (일기/할일/D-Day 개수 포함) + 검색 필터 -->
+	<select id="getUserListWithStats" parameterType="map"
+		resultType="com.onedaylog.project.dto.AdminUserStatsDTO">
+		SELECT
+			U.USER_ID,
+			U.LOGIN_ID,
+			U.EMAIL,
+			U.NAME,
+			U.CREATED_AT,
+			U.IS_DELETED AS isDeleted,
+			(SELECT COUNT(*) FROM DIARY D WHERE D.USER_ID = U.USER_ID) AS diaryCount,
+			(SELECT COUNT(*) FROM TODO T WHERE T.USER_ID = U.USER_ID) AS todoCount,
+			(SELECT COUNT(*) FROM DDAY D WHERE D.USER_ID = U.USER_ID) AS ddayCount
+		FROM USERS U
+		<where>
+			<if test="searchField != null and searchKeyword != null and searchKeyword != ''">
+				AND
+				<choose>
+					<when test="searchField == 'loginId'">
+						U.LOGIN_ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+					<when test="searchField == 'name'">
+						U.NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+		</where>
+		ORDER BY U.CREATED_AT DESC
+	</select>
+
+	<!-- 탈퇴한 회원 리스트 조회 (탈퇴일, 일기/할일/D-Day 수 포함) + 검색 필터 -->
+	<select id="getWithdrawnUserList" parameterType="map"
+		resultType="com.onedaylog.project.dto.AdminUserStatsDTO">
+		SELECT
+			USER_ID AS userId,
+			LOGIN_ID AS loginId,
+			EMAIL,
+			NAME,
+			CREATED_AT AS createdAt,
+			WITHDRAWN_AT AS withdrawnAt,
+			IS_DELETED AS isDeleted,
+			(SELECT COUNT(*) FROM DIARY WHERE USER_ID = U.USER_ID) AS diaryCount,
+			(SELECT COUNT(*) FROM TODO WHERE USER_ID = U.USER_ID) AS todoCount,
+			(SELECT COUNT(*) FROM DDAY WHERE USER_ID = U.USER_ID) AS ddayCount
+		FROM USERS U
+		WHERE IS_DELETED = 'Y'
+		<if test="searchField != null and searchKeyword != null and searchKeyword != ''">
+			AND
+			<choose>
+				<when test="searchField == 'loginId'">
+					LOGIN_ID LIKE '%' || #{searchKeyword} || '%'
+				</when>
+				<when test="searchField == 'name'">
+					NAME LIKE '%' || #{searchKeyword} || '%'
+				</when>
+			</choose>
+		</if>
+		ORDER BY WITHDRAWN_AT DESC
+	</select>
+
+	<!-- 회원 탈퇴 처리 (IS_DELETED = 'Y', 탈퇴일 등록) -->
+	<update id="withdrawUser" parameterType="int">
+		UPDATE USERS
+		SET IS_DELETED = 'Y',
+			WITHDRAWN_AT = SYSDATE
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<!-- 탈퇴한 회원 영구 삭제 -->
+	<delete id="deleteWithdrawnUser" parameterType="int">
+		DELETE FROM USERS
+		WHERE USER_ID = #{userId}
+		AND IS_DELETED = 'Y'
+	</delete>
+
+	<!-- 탈퇴한 회원 복구 처리 -->
+	<update id="recoverUser" parameterType="int">
+		UPDATE USERS
+		SET IS_DELETED = 'N',
+			WITHDRAWN_AT = NULL
+		WHERE USER_ID = #{userId}
+	</update>
+
+</mapper>

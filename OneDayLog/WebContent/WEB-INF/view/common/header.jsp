@@ -8,7 +8,9 @@
     <div class="user-info" style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #374151; font-family: 'Noto Sans KR', sans-serif;">
         <c:choose>
             <c:when test="${not empty sessionScope.user_name}">
-                <span>👤 <strong style="color:#111;">${sessionScope.user_name}</strong> 님 환영합니다!</span>
+                <a href="mypage.action" style="text-decoration: none; color: inherit;">
+				    <span>👤 <strong style="color:#111;">${sessionScope.user_name}</strong> 님 환영합니다!</span>
+				</a>
                 <a href="logout.action" class="user-btn">로그아웃</a>
             </c:when>
             <c:otherwise>

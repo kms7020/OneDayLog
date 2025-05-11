@@ -1,0 +1,294 @@
+/* 관리자 대시보드 전체 컨테이너 */
+.admin-dashboard {
+  max-width: 880px;
+  margin: 80px auto;
+  padding: 48px 64px;
+  border-radius: 36px;
+  border: 1px solid var(--color-accent);
+  background-color: #ffffff;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.admin-dashboard h2 {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: var(--color-text);
+  border-left: 6px solid var(--color-accent);
+  padding-left: 12px;
+  font-weight: 500;
+}
+
+.admin-overview {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 80px;
+  flex-wrap: wrap;
+}
+
+.admin-stats-text {
+  font-size: 17px;
+  color: var(--color-text);
+  font-weight: 500;
+  line-height: 2.4;
+  white-space: nowrap;
+}
+
+.admin-menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 180px;
+}
+
+.admin-menu-btn {
+  background: var(--color-accent);
+  color: #1f2937;
+  font-weight: 500;
+  text-align: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: 0.2s ease;
+}
+
+.admin-menu-btn:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  color: #1f2937;
+}
+
+.admin-logout-box {
+  margin-top: 40px;
+}
+
+.admin-logout-btn {
+  background-color: var(--color-danger);
+  color: #fff;
+  font-size: 13px;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.admin-logout-btn:hover {
+  background-color: #dc2626;
+}
+
+.admin-home-btn {
+  background-color: #fffce5;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 1px solid #f4d74d;
+  border-radius: 10px;
+  float: right;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  transition: 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.admin-home-btn:hover {
+  background-color: #fef9d7;
+  color: #1f2937;
+}
+
+.user-list-container {
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+.admin-title {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.user-search-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.user-list-header,
+.user-list-item {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 2fr 1.2fr 1.2fr 0.8fr 0.8fr 0.8fr 1.5fr;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  align-items: center;
+}
+
+.user-list-header {
+  font-weight: bold;
+  background-color: #f9fafb;
+  color: #374151;
+}
+
+.user-list-item {
+  background-color: #fff;
+  transition: background 0.2s;
+}
+
+.user-list-item:hover {
+  background-color: #f3f4f6;
+}
+
+.status-tag {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-tag.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-tag.deleted {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.user-action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-back {
+  margin-top: 40px;
+  text-align: center;
+}
+
+body.dark-mode .admin-dashboard {
+  background-color: var(--color-box);
+}
+
+body.dark-mode .admin-dashboard h2,
+body.dark-mode .admin-stats-text {
+  color: var(--color-text);
+}
+
+body.dark-mode .admin-menu-btn,
+body.dark-mode .admin-menu-btn:hover {
+  background: var(--color-accent);
+  color: #1f2937;
+}
+
+body.dark-mode .admin-home-btn,
+body.dark-mode .admin-home-btn:hover {
+  background-color: #fdf7cc;
+  color: #1f2937;
+}
+
+body.dark-mode .user-list-container {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+body.dark-mode .user-search-form select,
+body.dark-mode .user-search-form input {
+  background-color: var(--color-box);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+body.dark-mode .user-search-form input::placeholder {
+  color: var(--color-subtext);
+}
+
+body.dark-mode .user-list-header {
+  background-color: #2d3748;
+  color: var(--color-text);
+}
+
+body.dark-mode .user-list-item {
+  background-color: #1e293b;
+  color: var(--color-text);
+}
+
+body.dark-mode .user-list-item:hover {
+  background-color: #273349;
+}
+
+body.dark-mode .status-tag.active {
+  background-color: #15803d22;
+  color: #86efac;
+}
+
+body.dark-mode .status-tag.deleted {
+  background-color: #b91c1c33;
+  color: #fecaca;
+}
+
+.user-search-form button {
+  padding: 10px 20px;
+  background-color: var(--primary);
+  white-space: nowrap;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #1f2937;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.user-search-form button:hover {
+  background-color: #fde68a;
+  transform: translateY(-2px);
+}
+
+body.dark-mode .user-search-form button {
+  background-color: #facc15;
+  color: #1f2937;
+}
+
+body.dark-mode .user-search-form button:hover {
+  background-color: #fde047;
+}
+
+.delete-btn {
+  background-color: #f87171;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  
+  white-space: nowrap; /* 🔥 줄바꿈 방지 */
+  text-align: center;
+  min-width: 80px; /* 🔧 필요시 고정 너비 추가 */
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+.recover-btn {
+  background-color: #60a5fa;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.recover-btn:hover {
+  background-color: #3b82f6;
+}

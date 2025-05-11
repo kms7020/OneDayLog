@@ -16,6 +16,7 @@
     <script src="${pageContext.request.contextPath}/js/onedaylog-script.js" defer></script>
     <script src="${pageContext.request.contextPath}/js/user.js" defer></script>
     <script src="${pageContext.request.contextPath}/js/main.js" defer></script>
+    <script>const contextPath = '<%= request.getContextPath() %>';</script>
 </head>
 
 <body>

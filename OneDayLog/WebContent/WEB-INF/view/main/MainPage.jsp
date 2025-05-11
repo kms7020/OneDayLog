@@ -36,7 +36,7 @@
     <%-- 상단 메뉴 버튼 --%>
     <div class="menu-grid">
         <a href="diaryList.action" class="menu-button">📘 일기장</a>
-        <a href="todoList.action" class="menu-button">📝 오늘의 리스트</a>
+        <a href="todoList.action" class="menu-button">📝 리스트</a>
         <a href="ddayList.action" class="menu-button">📆 D-Day</a>
     </div>
 

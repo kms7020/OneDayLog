@@ -16,6 +16,7 @@
     <%-- JavaScript: 기능 스크립트 --%>
     <script src="${pageContext.request.contextPath}/js/onedaylog-script.js" defer></script>
     <script src="${pageContext.request.contextPath}/js/main.js" defer></script>
+    <script src="${pageContext.request.contextPath}/js/admin.js" defer></script>
 </head>
 
 <body>
@@ -26,9 +27,9 @@
         <%-- 왼쪽 텍스트 영역 --%>
         <div class="intro-content">
             <h1 class="intro-logo">OneDayLog</h1>
-            <h2 class="intro-title">하루를 남기는 공간</h2>
-            <p class="intro-desc">D-Day부터 해야 할 일, 나만의 한 줄 일기까지.</p>
-            <p class="intro-desc">기억을 모으는 습관, 여기서 시작해보세요.</p>
+            <h2 class="intro-title">하루를 남기는 습관</h2>
+            <p class="intro-desc">D-Day부터 ToDoList, 나만의 한 줄 일기까지.</p>
+            <p class="intro-desc">기억을 모으는 공간, 여기서 시작해보세요.</p>
             <a href="login.action" class="btn intro-btn">로그인 하러가기</a>
         </div>
 
@@ -38,6 +39,19 @@
         </div>
 
     </div>
+		<!-- 관리자 로그인 floating 버튼 -->
+		<a href="#" class="admin-login-float" onclick="openAdminModal(); return false;">👑 관리자</a>
+		<!-- 관리자 비밀번호 입력 모달 -->
+<div id="adminPasswordModal" class="modal">
+  <div class="modal-box">
+    <h3 class="modal-title">👑 관리자 비밀번호 입력</h3>
+    <input type="password" id="adminSecretInput" placeholder="비밀번호 입력" class="modal-input" />
+    <div class="modal-buttons">
+      <button class="btn btn-yellow" onclick="checkAdminSecret()">확인</button>
+      <button class="btn btn-gray" onclick="closeAdminModal()">취소</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

@@ -5,12 +5,14 @@
 
 <mapper namespace="com.onedaylog.project.dao.DdayDAO">
 
+	<!-- D-Day 일정 등록 -->
 	<insert id="insertDday"
 		parameterType="com.onedaylog.project.dto.DdayDTO">
 		INSERT INTO DDAY (DDAY_ID, USER_ID, TITLE, TARGET_DATE)
 		VALUES (DDAY_SEQ.NEXTVAL, #{userId}, #{title}, #{targetDate})
 	</insert>
 
+	<!-- D-Day 전체 목록 조회 (오름차순 정렬: 날짜 빠른 순, 중요도 우선) -->
 	<select id="selectUpcomingDdayByUserId" parameterType="int"
 		resultType="com.onedaylog.project.dto.DdayDTO">
 		SELECT DDAY_ID AS ddayId,
@@ -25,6 +27,7 @@
 		ORDER BY IMPORTANT DESC, TARGET_DATE ASC
 	</select>
 
+	<!-- D-Day 전체 목록 조회 (내림차순 정렬: 날짜 늦은 순, 중요도 우선) -->
 	<select id="selectUpcomingDdayDesc" parameterType="int"
 		resultType="com.onedaylog.project.dto.DdayDTO">
 		SELECT DDAY_ID AS ddayId,
@@ -38,6 +41,7 @@
 		ORDER BY IMPORTANT DESC, TARGET_DATE DESC
 	</select>
 
+	<!-- D-Day 상위 3개만 조회 (가장 가까운 일정 + 중요도 우선) -->
 	<select id="selectTop3UpcomingDday" parameterType="int"
 		resultType="com.onedaylog.project.dto.DdayDTO">
 		SELECT *
@@ -56,6 +60,7 @@
 		WHERE ROWNUM &lt;= 3
 	</select>
 
+	<!-- 중요 표시 토글 (1 <-> 0) -->
 	<update id="toggleImportant" parameterType="int">
 		UPDATE DDAY
 		SET
@@ -64,11 +69,13 @@
 		#{ddayId}
 	</update>
 
+	<!-- 특정 D-Day 삭제 -->
 	<delete id="deleteDday" parameterType="int">
 		DELETE FROM DDAY WHERE
 		DDAY_ID = #{ddayId}
 	</delete>
 
+	<!-- 특정 D-Day 상세 조회 (ID로 조회) -->
 	<select id="selectDdayById" parameterType="int"
 		resultType="com.onedaylog.project.dto.DdayDTO">
 		SELECT DDAY_ID AS ddayId,

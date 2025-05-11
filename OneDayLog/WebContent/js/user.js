@@ -6,6 +6,50 @@ document.addEventListener('DOMContentLoaded', function () {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const passwordError = document.getElementById('passwordError');
+    
+    const profileUpload = document.getElementById("profileUpload");
+    const modal = document.getElementById("profileModal");
+    const modalImg = document.getElementById("modalImage");
+    const closeBtn = document.querySelector(".modal .close");
+    const profileTrigger = document.getElementById("profileImageTrigger");
+
+    // ✅ 프로필 이미지 클릭 시 모달 열기 (이벤트 위임 방식)
+    if (profileTrigger && modal && modalImg && closeBtn != null) {
+        profileTrigger.addEventListener("click", function (event) {
+            const img = event.target.closest("img");
+            if (img) {
+                console.log("이미지 클릭됨", img.src);
+                modal.style.display = "block";
+                modalImg.src = img.src;
+            }
+        });
+
+        closeBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+
+    // ✅ 프로필 미리보기
+    if (profileUpload) {
+        profileUpload.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const box = document.querySelector(".profile-image");
+                box.innerHTML = `<img src="${event.target.result}" alt="미리보기">`;
+                // ❌ 이제 여기서 따로 addEventListener 안 걸어도 됨
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 
     // 로그인 아이디 입력 시 메시지 안내
     if (loginIdInput) {
@@ -106,10 +150,13 @@ function checkLoginId() {
         return;
     }
 
-    fetch(`/checkLoginId?loginId=${encodeURIComponent(loginId)}`)
+    fetch(`${contextPath}/checkLoginId.action?loginId=${encodeURIComponent(loginId)}`)
         .then(res => res.text())
         .then(data => {
-            if (data === 'duplicate') {
+        	if (data === 'withdrawn') {
+        	    loginIdMsg.textContent = '⚠️ 탈퇴한 계정의 아이디는 재사용할 수 없습니다.';
+        	    loginIdMsg.style.color = 'orange';
+        	}else if (data === 'duplicate') {
                 loginIdMsg.textContent = '❌ 이미 사용 중인 아이디입니다.';
                 loginIdMsg.style.color = 'red';
             } else {
@@ -140,10 +187,14 @@ function checkEmail() {
         return;
     }
 
-    fetch(`/checkEmail?email=${encodeURIComponent(email)}`)
+    fetch(`${contextPath}/checkEmail.action?email=${encodeURIComponent(email)}`)
         .then(res => res.text())
         .then(data => {
-            if (data === 'duplicate') {
+        	if (data === 'withdrawn') {
+        		emailMsg.textContent = '⚠️ 탈퇴한 계정의 이메일는 재사용할 수 없습니다.';
+        		emailMsg.style.color = 'orange';
+        	}
+        	else if (data === 'duplicate') {
                 emailMsg.textContent = '❌ 이미 사용 중인 이메일입니다.';
                 emailMsg.style.color = 'red';
             } else {
@@ -153,3 +204,9 @@ function checkEmail() {
             emailMsg.style.display = 'block';
         });
 }
+
+
+
+
+
+

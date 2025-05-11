@@ -29,6 +29,14 @@ body.dark-mode {
     --color-danger: #f87171;
     --shadow: 0 4px 14px rgba(255, 255, 255, 0.05);
 }
+body.dark-mode .btn-yellow {
+  background-color: #d1d5db;;
+  color: #1f2937;
+}
+
+body.dark-mode .btn-yellow:hover {
+  background-color: #f3f4f6;
+}
 
 body {
     font-family: 'Segoe UI', 'Noto Sans KR', sans-serif;
@@ -294,3 +302,281 @@ a:hover {
   transform: scale(0.98);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
+
+.custom-rounded-card {
+  border: 1px solid var(--primary);
+  border-radius: 24px;
+  padding: 36px;
+  background: var(--bg);
+  box-shadow: 0 2px 8px var(--shadow);
+  font-size: 16px;
+  transition: all var(--transition);
+}
+
+.mypage-line {
+  margin: 14px 0;
+  font-size: 16px;
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  line-height: 1.6;
+}
+
+/* 메인 강조 버튼 */
+.btn-yellow {
+  background-color: var(--primary);
+  color: #333;
+}
+.btn-yellow:hover {
+  background-color: #f1c232;
+}
+
+/* 보조 중립 버튼 */
+.btn-gray {
+  background-color: #d1d5db;
+  color: #111;
+}
+.btn-gray:hover {
+  background-color: #e5e7eb;
+}
+
+.btn-danger {
+  background-color: #f87171 !important;
+  color: #fff !important;
+  font-size: 13px;
+  padding: 6px 16px;
+  border-radius: 10px;
+  min-width: 80px;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.btn-danger:hover {
+  background-color: #ef4444 !important;
+}
+
+/* 위협 동작용 버튼 */
+.btn-red {
+  background: #ef4444;
+  color: #fff;
+  border-radius: 12px;
+  padding: 10px 20px;
+  transition: background var(--transition), transform 0.15s ease;
+}
+.btn-red:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-image {
+  width: 140px;
+  height: 140px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--text);
+  font-size: 15px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+}
+
+.profile-edit-btn {
+  padding: 5px 12px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--accent);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.profile-edit-btn:hover {
+  background-color: var(--primary);
+  color: black;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background-color: var(--color-box);
+  border: 1px solid var(--color-accent);
+  border-radius: 24px;
+  padding: 40px 32px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.modal-content {
+    display: block;             /* ⭐ 중앙 정렬을 위해 반드시 필요 */
+    margin: auto;               /* ⭐ flex 백업용, 혹시 부모 요소가 바뀌었을 때를 대비 */
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 12px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  border-radius: 14px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-box-soft);
+  color: var(--color-text);
+  margin-bottom: 28px;
+  transition: border 0.2s;
+}
+
+.modal-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.modal-buttons button {
+  min-width: 90px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+
+.modal-buttons .confirm-btn {
+  background-color: var(--color-accent);
+  color: #1f2937;
+}
+
+.modal-buttons .confirm-btn:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.modal-buttons .cancel-btn {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+}
+
+.modal-buttons .cancel-btn:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+/* 모달 show/hide */
+.modal.hidden {
+  display: none;
+}
+
+.modal.show {
+  display: flex;
+}
+.modal .close {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.admin-login-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+/* 🌞 라이트 모드용 */
+body:not(.dark-mode) .admin-login-float {
+    background-color: #f1f3f5;
+    color: #222;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 🌙 다크 모드용 */
+body.dark-mode .admin-login-float {
+    background-color: #2b2b2b;
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.admin-login-float:hover {
+    filter: brightness(0.9);
+}
+
+body.dark-mode .modal-buttons .confirm-btn {
+  background-color: #facc15;
+  color: #1f2937;
+}
+
+body.dark-mode .modal-buttons .confirm-btn:hover {
+  background-color: #f7d358;
+}
+
+body.dark-mode .modal-buttons .cancel-btn {
+  background-color: #2d3748;
+  color: #f3f4f6;
+  border: 1px solid #475569;
+}
+
+body.dark-mode .modal-buttons .cancel-btn:hover {
+  background-color: #f7d358;
+}
+
+

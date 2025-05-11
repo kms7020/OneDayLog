@@ -7,7 +7,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>OneDayLog - 오늘의 약속</title>
+    <title>OneDayLog - 리스트</title>
 
     <%-- CSS 스타일시트 --%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/onedaylog-style.css">

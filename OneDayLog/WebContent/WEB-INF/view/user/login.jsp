@@ -22,26 +22,43 @@
   <div class="login-wrapper">
     <div class="container">
 
-      <%-- 홈으로 이동 버튼 --%>
-      <a href="preLoginMain.action" class="back-button" title="홈으로">&#x21A9;</a>
+		<%-- 홈으로 이동 버튼 --%>
+		<a href="preLoginMain.action" class="back-button" title="홈으로">&#x21A9;</a>
 
-      <%-- 로그인 제목 --%>
-      <h2>로그인</h2>
+		<%-- 로그인 제목 --%>
+		<h2>로그인</h2>
+      
 
-      <%-- 로그인 폼 --%>
-      <form action="${pageContext.request.contextPath}/login.action" method="post">
-        <input type="text" name="loginId" placeholder="아이디" required>
-        <input type="password" name="password" placeholder="비밀번호" required>
-        <button type="submit" class="btn">로그인</button>
-      </form>
-
-      <%-- 회원가입 링크 --%>
-      <div style="text-align: center;">
-        <a href="${pageContext.request.contextPath}/signup.action" class="btn-back">
-          계정이 없으신가요? 회원가입
-        </a>
-      </div>
-
+		
+		<%-- 로그인 폼 --%>
+		<form action="${pageContext.request.contextPath}/login.action" method="post">
+			<input type="text" name="loginId" placeholder="아이디" required>
+			<input type="password" name="password" placeholder="비밀번호" required>
+			<button type="submit" class="btn">로그인</button>
+		</form>
+		<%-- 오류 메시지 --%>      
+		<c:if test="${not empty error}">
+			<div style="color: red;  margin-top: 10px;">
+				${error}
+			</div>
+		</c:if>
+		
+		<!-- 아이디/비밀번호 찾기 링크 -->
+		<div style="text-align: center; margin-top: 10px;">
+		    <a href="${pageContext.request.contextPath}/findLoginIdForm.action" class="btn-back" style="margin-right: 10px;">
+		        아이디 찾기
+		    </a>
+		    <a href="${pageContext.request.contextPath}/findPasswordForm.action" class="btn-back">
+		        비밀번호 찾기
+		    </a>
+		</div>
+		
+		<%-- 회원가입 링크 --%>
+		<div style="text-align: center;">
+			<a href="${pageContext.request.contextPath}/signup.action" class="btn-back">
+				계정이 없으신가요? 회원가입
+			</a>
+		</div>	
     </div>
   </div>
 

@@ -27,6 +27,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="localDataSource"></property>
         <property name="mapperLocations" value="classpath:com/onedaylog/project/mapper/*.xml"></property>
+        <property name="typeAliasesPackage" value="com.onedaylog.project.dto" />
     </bean>
 
     <!-- MyBatis SqlSessionTemplate 설정 -->
@@ -52,6 +53,9 @@
 	</bean>
 	
 	<mvc:annotation-driven />
-	
+	<mvc:resources mapping="/profile-image/**" location="file:///C:/upload/profile/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:default-servlet-handler />
 </beans>
 

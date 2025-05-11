@@ -4,7 +4,7 @@
 
 <mapper namespace="com.onedaylog.project.dao.UserDAO">
 
-	<!-- 1. 회원가입 (INSERT) -->
+	<!-- 회원가입 (INSERT) -->
 	<insert id="insertUser"
 		parameterType="com.onedaylog.project.dto.UserDTO">
 		INSERT INTO USERS (USER_ID, EMAIL, LOGIN_ID, PASSWORD,
@@ -13,21 +13,36 @@
 		#{name})
 	</insert>
 
-
-	<!-- 2. 아이디 중복 확인 -->
+	<!-- 아이디 중복 확인 -->
 	<select id="findUserByLoginId" parameterType="string"
 		resultType="com.onedaylog.project.dto.UserDTO">
-		SELECT * FROM USERS WHERE LOGIN_ID = #{loginId}
+		SELECT USER_ID AS userId,
+		EMAIL,
+		LOGIN_ID AS loginId,
+		IS_DELETED AS isDeleted
+		FROM USERS
+		WHERE LOGIN_ID = #{loginId}
 	</select>
 
-
-	<!-- 3. 이메일 중복 확인 -->
+	<!-- 이메일 중복 확인 -->
 	<select id="findUserByEmail" parameterType="string"
 		resultType="com.onedaylog.project.dto.UserDTO">
-		SELECT * FROM USERS WHERE EMAIL = #{email}
+		SELECT USER_ID AS userId,
+		EMAIL,
+		LOGIN_ID AS loginId,
+		IS_DELETED AS isDeleted
+		FROM USERS
+		WHERE EMAIL = #{email}
 	</select>
+	
+	<!-- 임시 비밀번호로 비밀번호 변경 (userId 기준) -->
+	<update id="updatePasswordById" parameterType="map">
+		UPDATE USERS
+		SET PASSWORD = #{newPassword}
+		WHERE USER_ID = #{userId}
+	</update>
 
-	<!-- 4. 아이디 + 비밀번호로 사용자 조회 -->
+	<!-- 로그인: 아이디 + 비밀번호로 사용자 정보 조회 -->
 	<select id="findUserByLoginIdAndPassword"
 		parameterType="com.onedaylog.project.dto.UserDTO"
 		resultType="com.onedaylog.project.dto.UserDTO">
@@ -36,12 +51,68 @@
 		LOGIN_ID AS loginId,
 		PASSWORD,
 		NAME,
-		CREATED_AT AS createdAt
+		CREATED_AT AS createdAt,
+		PROFILE_IMAGE AS profileImage,
+		IS_DELETED AS isDeleted
 		FROM USERS
-		WHERE LOGIN_ID =
-		#{loginId}
-		AND PASSWORD = #{password}
+		WHERE LOGIN_ID = #{loginId}
+		AND
+		PASSWORD = #{password}
 	</select>
+
+	<!-- 사용자 단건 조회 (userId 기준) -->
+	<select id="selectUserById" parameterType="int"
+		resultType="com.onedaylog.project.dto.UserDTO">
+		SELECT
+		USER_ID AS userId,
+		EMAIL,
+		LOGIN_ID AS loginId,
+		PASSWORD,
+		NAME,
+		CREATED_AT AS createdAt,
+		PROFILE_IMAGE AS profileImage
+		FROM USERS
+		WHERE USER_ID = #{userId}
+	</select>
+
+	<!-- 비밀번호 확인 (비밀번호 재확인용) -->
+	<select id="selectPasswordById" parameterType="int"
+		resultType="String">
+		SELECT PASSWORD FROM USERS WHERE USER_ID = #{userId}
+	</select>
+
+	<!-- 사용자 정보 수정 (이메일, 이름, 비밀번호) -->
+	<update id="updateUser"
+		parameterType="com.onedaylog.project.dto.UserDTO">
+		UPDATE USERS
+		SET EMAIL = #{email},
+		NAME = #{name},
+		PASSWORD = #{password}
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<!-- 프로필 이미지 수정 (loginId 기준) -->
+	<update id="updateProfileImage">
+		UPDATE USERS
+		SET PROFILE_IMAGE = #{profileImage}
+		WHERE
+		LOGIN_ID = #{loginId}
+	</update>
+	
+	<!-- 프로필 이미지 수정 (userId 기준) -->
+	<update id="updateProfileImageById" parameterType="map">
+		UPDATE USERS
+		SET PROFILE_IMAGE = #{fileName}
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<!-- 회원 탈퇴 처리 (IS_DELETED = 'Y') -->
+	<update id="markUserAsDeleted" parameterType="int">
+		UPDATE USERS
+		SET
+		IS_DELETED = 'Y'
+		WHERE USER_ID = #{userId}
+	</update>
 
 
 </mapper>

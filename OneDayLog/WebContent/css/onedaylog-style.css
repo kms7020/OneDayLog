@@ -79,6 +79,20 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: var(--round);
+    margin-top: 8px;
+    background: var(--accent);
+    color: var(--text);
+    transition: background var(--transition), color var(--transition);
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
+}
+
+
 .task-text {
     flex: 1;
     font-size: 16px !important;
@@ -181,9 +195,10 @@ ul.todo-list li .delete-btn {
 
 .btn-group {
   display: flex;
-  gap: 12px;
-  margin-top: 24px;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
 }
 
 .btn, .btn-back, .toggle-mode,
@@ -297,6 +312,81 @@ label {
   font-size: 15px;
   color: var(--text);
   font-family: 'Noto Sans KR', sans-serif;
+}
+/* 마이페이지 전용 스타일 */
+.mypage-container {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.mypage-card {
+  background-color: var(--box, var(--color-box, #ffffff));
+  padding: 48px;
+  border-radius: var(--round);
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: background-color var(--transition), box-shadow var(--transition);
+}
+
+.mypage-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text);
+  font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
+  margin-bottom: 36px;
+}
+
+.mypage-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--subtext);
+  margin-bottom: 4px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.info-value {
+  font-size: 16px;
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.mypage-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+
+
+.field-group {
+  margin-bottom: 24px;
+}
+
+.field-label {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-subtext);
+  font-size: 15px;
+}
+
+.field-value {
+  margin-top: 4px;
+  font-size: 16px;
+  color: var(--color-text);
 }
   
   

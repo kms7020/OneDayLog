@@ -5,12 +5,14 @@
 
 <mapper namespace="com.onedaylog.project.dao.DiaryDAO">
 
+	<!-- 일기 작성 (현재 날짜 기준으로 INSERT) -->
 	<insert id="insertDiary"
 		parameterType="com.onedaylog.project.dto.DiaryDTO">
 		INSERT INTO DIARY (DIARY_ID, USER_ID, DIARY_DATE, CONTENT)
 		VALUES (DIARY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{content})
 	</insert>
 
+	<!-- 특정 사용자의 일기 리스트 조회 (최신순 정렬) -->
 	<select id="getDiaryListByUserId" parameterType="int"
 		resultType="com.onedaylog.project.dto.DiaryDTO">
 		SELECT DIARY_ID AS diaryId,
@@ -21,7 +23,8 @@
 		WHERE USER_ID = #{userId}
 		ORDER BY DIARY_DATE DESC
 	</select>
-
+	
+	<!-- 특정 일기 삭제 -->
 	<delete id="deleteDiary" parameterType="int">
 		DELETE FROM DIARY WHERE DIARY_ID = #{diaryId}
 	</delete>
