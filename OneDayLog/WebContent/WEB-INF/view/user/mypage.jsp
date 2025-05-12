@@ -38,7 +38,7 @@
         <img src="${pageContext.request.contextPath}/profile-image/${sessionScope.user.profileImage}" />
     </c:when>
     <c:otherwise>
-        <img src="${pageContext.request.contextPath}/img/default.jpg" />
+        <img src="/profile-image/default.jpg" />
     </c:otherwise>
 </c:choose>
 
