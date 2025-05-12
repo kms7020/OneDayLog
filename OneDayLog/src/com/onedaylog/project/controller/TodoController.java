@@ -75,6 +75,12 @@ public class TodoController {
         
     }
     
+    @PostMapping("/todoUpdate.action")
+    public String updateTodo(TodoDTO dto) {
+        TodoDAO dao = sqlSession.getMapper(TodoDAO.class);
+        dao.updateTodo(dto);
+        return "redirect:/todoList.action"; 
+    }
     
 
 }

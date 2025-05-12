@@ -87,6 +87,30 @@ public class DdayController
 	    return "redirect:" + referer;
 	}
 
+	// 수정 폼 진입
+	@GetMapping("/ddayEdit.action")
+	public String ddayEditForm(@RequestParam("ddayId") int ddayId, Model model) {
+	    System.out.println("✅ 수정 폼 진입 - ID: " + ddayId);
+	    DdayDAO dao = sqlSession.getMapper(DdayDAO.class);
+	    DdayDTO dto = dao.getDdayById(ddayId);
+	    System.out.println("→ DAO로부터 받은 DTO ID: " + dto.getDdayId());  // 👈 이거 꼭 찍기
+	    model.addAttribute("dday", dto);
+	    return "dday/ddayEdit";
+	}
+
+	// 수정 처리
+	@PostMapping("/ddayEdit.action")
+	public String ddayEditSubmit(DdayDTO dto) {
+	    System.out.println("🛠 수정 요청 들어옴");
+	    System.out.println("ID: " + dto.getDdayId());
+	    System.out.println("제목: " + dto.getTitle());
+	    System.out.println("날짜: " + dto.getTargetDate());
+
+	    DdayDAO dao = sqlSession.getMapper(DdayDAO.class);
+	    dao.updateDday(dto);
+	    return "redirect:/ddayList.action";
+	}
+
 
 
 }

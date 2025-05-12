@@ -15,5 +15,11 @@ public interface DdayDAO {
 
     // 상세 조회
     DdayDTO selectDdayById(int ddayId);
+    
+    // 가져오기
+    DdayDTO getDdayById(int ddayId);
+    
+    // 수정
+    int updateDday(DdayDTO dto);
 
 }

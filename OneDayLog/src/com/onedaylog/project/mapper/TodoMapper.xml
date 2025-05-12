@@ -46,4 +46,12 @@
 		WHERE TODO_ID =
 		#{todoId}
 	</update>
+	
+	<!-- 할 일 수정 -->
+	<update id="updateTodo" parameterType="com.onedaylog.project.dto.TodoDTO">
+	    UPDATE TODO
+	    SET TASK = #{task}
+	    WHERE TODO_ID = #{todoId}
+	</update>
+	
 </mapper>

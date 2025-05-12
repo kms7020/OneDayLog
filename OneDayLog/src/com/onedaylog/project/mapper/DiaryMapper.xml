@@ -13,20 +13,56 @@
 	</insert>
 
 	<!-- 특정 사용자의 일기 리스트 조회 (최신순 정렬) -->
-	<select id="getDiaryListByUserId" parameterType="int"
-		resultType="com.onedaylog.project.dto.DiaryDTO">
-		SELECT DIARY_ID AS diaryId,
-		USER_ID,
-		CONTENT,
-		TO_CHAR(DIARY_DATE, 'YYYY-MM-DD') AS diaryDate
-		FROM DIARY
-		WHERE USER_ID = #{userId}
-		ORDER BY DIARY_DATE DESC
+	<select id="getDiaryListByUserId" parameterType="int" resultType="DiaryDTO">
+	    SELECT 
+	        DIARY_ID AS diaryId,
+	        USER_ID AS userId,
+	        CONTENT AS content,
+	        DIARY_DATE AS diaryDate  
+	    FROM DIARY
+	    WHERE USER_ID = #{userId}
+	    ORDER BY DIARY_DATE DESC, DIARY_ID DESC
+	</select>
+	
+	<!-- 날짜 빠른순,느린순 정렬 -->
+	<select id="getDiaryListSorted" parameterType="map" resultType="DiaryDTO">
+	    SELECT 
+	        DIARY_ID AS diaryId,
+	        USER_ID AS userId,
+	        CONTENT AS content,
+	        DIARY_DATE AS diaryDate  
+	    FROM DIARY
+	    WHERE USER_ID = #{userId}
+	    ORDER BY DIARY_DATE 
+	    <choose>
+	        <when test="order == 'asc'">ASC</when>
+	        <otherwise>DESC</otherwise>
+	    </choose>
 	</select>
 	
 	<!-- 특정 일기 삭제 -->
 	<delete id="deleteDiary" parameterType="int">
 		DELETE FROM DIARY WHERE DIARY_ID = #{diaryId}
 	</delete>
+	
+	<!-- 일기 조회 (수정폼용) -->
+	<select id="findById" parameterType="int" resultType="DiaryDTO">
+		SELECT 
+		    DIARY_ID AS diaryId,
+		    USER_ID AS userId,
+		    CONTENT AS content,
+		    DIARY_DATE AS diaryDate
+		FROM DIARY
+		WHERE DIARY_ID = #{diaryId}
+	</select>
+
+
+	<!-- 일기 수정 처리 -->
+	<update id="updateDiary" parameterType="DiaryDTO">
+	    UPDATE DIARY
+	    SET CONTENT = #{content},
+	        DIARY_DATE = #{diaryDate}
+	    WHERE DIARY_ID = #{diaryId}
+	</update>
 
 </mapper>

@@ -3,38 +3,29 @@ package com.onedaylog.project.controller;
 import com.onedaylog.project.dto.AdminDTO;
 import com.onedaylog.project.dto.AdminUserStatsDTO;
 import com.onedaylog.project.dao.AdminDAO;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class AdminController {
 
     @Autowired
-    private SqlSession sqlSession;
-
-    @Autowired
     private AdminDAO adminDAO;
-    
-    private static final String ACCESS_KEY = "letmein123";
-    
-    // 관리자 로그인 폼 진입 
+
+    // 관리자 로그인 폼 진입
     @GetMapping("/adminLoginForm.action")
     public String adminLoginForm() {
+        System.out.println("✅ adminLoginForm 접근됨");
         return "admin/adminLogin";
     }
+
 
     // 관리자 로그인
     @PostMapping("/adminLogin.action")
@@ -43,37 +34,48 @@ public class AdminController {
                              HttpSession session,
                              Model model) {
 
-        // 하드코딩된 관리자 정보
-        String fixedId = "kms7262";
-        String fixedPw = "135724"; // 실제 운영시에는 암호화된 값을 비교하는 게 안전함
+        System.out.println("입력 ID: " + adminId);
+        System.out.println("입력 PW: " + adminPw);
 
-        if (adminId.equals(fixedId) && adminPw.equals(fixedPw)) {
-            session.setAttribute("adminLogin", true); // 로그인 상태 저장
-            return "redirect:/adminMain.action"; // 관리자 메인 페이지로 이동
+        Map<String, Object> param = new HashMap<>();
+        param.put("adminId", adminId);
+        param.put("adminPw", adminPw);
+        AdminDTO admin = adminDAO.loginAdmin(param);
+        
+        if (admin != null) {
+            System.out.println("✅ 관리자 이름: " + admin.getAdminName());
+        }
+
+        System.out.println("💡 adminId: " + param.get("adminId"));
+        System.out.println("💡 adminPw: " + param.get("adminPw"));
+
+        System.out.println("조회 결과: " + (admin != null ? "성공" : "실패"));
+
+        if (admin != null) {
+            session.setAttribute("adminLogin", true);
+            return "redirect:/adminMain.action";
         } else {
             model.addAttribute("errorMsg", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "admin/adminLogin"; // 다시 로그인 폼으로
+            return "admin/adminLogin";
         }
     }
-    
-    // 관리자 로그아웃 처리
+
+    // 관리자 로그아웃
     @GetMapping("/adminLogout.action")
     public String adminLogout(HttpSession session) {
         session.removeAttribute("adminLogin");
         return "redirect:/preLoginMain.action";
     }
-    
-    // 관리자 페이지 진입
+
+    // 관리자 메인
     @GetMapping("/adminMain.action")
     public String adminMain(HttpSession session, Model model) {
         Boolean isAdmin = (Boolean) session.getAttribute("adminLogin");
 
         if (isAdmin != null && isAdmin) {
-            // ✅ 예시 DAO 또는 Service로부터 데이터 가져오기
             int totalUsers = adminDAO.getTotalUserCount();
             int withdrawnUsers = adminDAO.getWithdrawnUserCount();
 
-            // ✅ 모델에 담기
             model.addAttribute("totalUsers", totalUsers);
             model.addAttribute("withdrawnUsers", withdrawnUsers);
 
@@ -83,31 +85,17 @@ public class AdminController {
         }
     }
 
-
-    
-    @PostMapping("/admin-access-check.action")
-    @ResponseBody
-    public String checkAdminAccessKey(@RequestParam("accessKey") String accessKey) {
-        if (ACCESS_KEY.equals(accessKey)) {
-            return "success";
-        }
-        return "fail";
-    }
-    
     // 사용자 조회
     @RequestMapping("/adminUserList.action")
-    public String adminUserList(
-        @RequestParam(value = "searchField", required = false) String searchField,
-        @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
-        Model model) {
-
-        AdminDAO dao = sqlSession.getMapper(AdminDAO.class);
+    public String adminUserList(@RequestParam(value = "searchField", required = false) String searchField,
+                                @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+                                Model model) {
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("searchField", searchField);
         paramMap.put("searchKeyword", searchKeyword);
 
-        List<AdminUserStatsDTO> userList = dao.getUserListWithStats(paramMap);
+        List<AdminUserStatsDTO> userList = adminDAO.getUserListWithStats(paramMap);
 
         model.addAttribute("userList", userList);
         model.addAttribute("searchField", searchField);
@@ -116,62 +104,47 @@ public class AdminController {
         return "admin/adminUserList";
     }
 
-    	// 탈퇴회원 관리
-	    @RequestMapping("/adminWithdrawnList.action")
-	    public String withdrawnUserList(
-	        @RequestParam(value = "searchField", required = false) String searchField,
-	        @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
-	        Model model) {
-	
-	        Map<String, String> paramMap = new HashMap<>();
-	        paramMap.put("searchField", searchField);
-	        paramMap.put("searchKeyword", searchKeyword);
-	
-	        List<AdminUserStatsDTO> withdrawnUsers = adminDAO.getWithdrawnUserList(paramMap);
-	
-	        model.addAttribute("withdrawnUsers", withdrawnUsers);
-	        model.addAttribute("searchField", searchField);
-	        model.addAttribute("searchKeyword", searchKeyword);
-	
-	        return "admin/withdrawnUserList";
-	    }
+    // 탈퇴회원 조회
+    @RequestMapping("/adminWithdrawnList.action")
+    public String withdrawnUserList(@RequestParam(value = "searchField", required = false) String searchField,
+                                    @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+                                    Model model) {
 
-        
-        // 탈퇴일 확인
-        @PostMapping("/withdraw.action")
-        public String withdrawUser(@RequestParam("userId") int userId) {
-        	System.out.println("✅ withdraw.action 진입 확인"); 
-            System.out.println("🧩 탈퇴 대상 userId: " + userId);
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("searchField", searchField);
+        paramMap.put("searchKeyword", searchKeyword);
 
-            AdminDAO dao = sqlSession.getMapper(AdminDAO.class);
-            dao.withdrawUser(userId);
+        List<AdminUserStatsDTO> withdrawnUsers = adminDAO.getWithdrawnUserList(paramMap);
 
-            // 명시적 커밋 (트랜잭션 관리가 없다면 필수)
-            sqlSession.commit(); // ✅ 이 줄 추가해보고 반영되는지 확인
+        model.addAttribute("withdrawnUsers", withdrawnUsers);
+        model.addAttribute("searchField", searchField);
+        model.addAttribute("searchKeyword", searchKeyword);
 
-            return "redirect:/adminUserList.action";
-        }
+        return "admin/withdrawnUserList";
+    }
 
+    // 회원 탈퇴 처리
+    @PostMapping("/withdraw.action")
+    public String withdrawUser(@RequestParam("userId") int userId) {
+        System.out.println("✅ withdraw.action 진입 확인");
+        System.out.println("🧩 탈퇴 대상 userId: " + userId);
 
+        adminDAO.withdrawUser(userId);
+        return "redirect:/adminUserList.action";
+    }
 
-        
-        // 회원 복구
-        @PostMapping("recoverUser.action")
-        public String recoverUser(@RequestParam("userId") int userId) {
-        	System.out.println("복구 대상 userId: " + userId); 
-            AdminDAO dao = sqlSession.getMapper(AdminDAO.class);
-            dao.recoverUser(userId);
-            return "redirect:adminWithdrawnList.action";
-        }
+    // 회원 복구
+    @PostMapping("/recoverUser.action")
+    public String recoverUser(@RequestParam("userId") int userId) {
+        System.out.println("복구 대상 userId: " + userId);
+        adminDAO.recoverUser(userId);
+        return "redirect:/adminWithdrawnList.action";
+    }
 
-        
-        // 회원 영구 삭제
-        @PostMapping("/deleteWithdrawnUser.action")
-        public String deleteWithdrawnUser(@RequestParam("userId") int userId) {
-            AdminDAO dao = sqlSession.getMapper(AdminDAO.class);
-            dao.deleteWithdrawnUser(userId);
-            return "redirect:/adminWithdrawnList.action";
-        }
-
-    
+    // 회원 영구 삭제
+    @PostMapping("/deleteWithdrawnUser.action")
+    public String deleteWithdrawnUser(@RequestParam("userId") int userId) {
+        adminDAO.deleteWithdrawnUser(userId);
+        return "redirect:/adminWithdrawnList.action";
+    }
 }

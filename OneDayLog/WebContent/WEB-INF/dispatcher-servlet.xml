@@ -26,8 +26,14 @@
     <!-- MyBatis SqlSessionFactory 설정 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="localDataSource"></property>
-        <property name="mapperLocations" value="classpath:com/onedaylog/project/mapper/*.xml"></property>
+        <property name="mapperLocations" value="classpath*:com/onedaylog/project/mapper/*Mapper.xml"/>
         <property name="typeAliasesPackage" value="com.onedaylog.project.dto" />
+        
+            <property name="configurationProperties">
+        <props>
+            <prop key="logImpl">STDOUT_LOGGING</prop>
+        </props>
+    </property>
     </bean>
 
     <!-- MyBatis SqlSessionTemplate 설정 -->

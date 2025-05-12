@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class DiaryDTO {
     private int diaryId, userId;
-    private String content, diaryDate;
+    private String content;
+    private Date diaryDate;
     
     // Getter/Setter
 	public int getDiaryId()
@@ -31,18 +32,13 @@ public class DiaryDTO {
 	{
 		this.content = content;
 	}
-	public String getDiaryDate()
+	public Date getDiaryDate()
 	{
 		return diaryDate;
 	}
-	public void setDiaryDate(String diaryDate)
+	public void setDiaryDate(Date diaryDate)
 	{
 		this.diaryDate = diaryDate;
 	}
-    
-
-	
-
-
-    
+     
 }

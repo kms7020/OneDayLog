@@ -87,6 +87,28 @@
 		FROM DDAY
 		WHERE DDAY_ID = #{ddayId}
 	</select>
+	
+	
+	<select id="getDdayById" parameterType="int" resultType="com.onedaylog.project.dto.DdayDTO">
+	    SELECT 
+	        DDAY_ID AS ddayId,
+	        USER_ID AS userId,
+	        TITLE,
+	        TARGET_DATE AS targetDate,
+	        CREATED_AT AS createdAt,
+	        IMPORTANT
+	    FROM DDAY
+	    WHERE DDAY_ID = #{ddayId}
+	</select>
+
+
+	<update id="updateDday" parameterType="com.onedaylog.project.dto.DdayDTO">
+	    UPDATE DDAY
+	    SET TITLE = #{title},
+	        TARGET_DATE = #{targetDate}
+	    WHERE DDAY_ID = #{ddayId}
+	</update>
+	
 
 
 </mapper>

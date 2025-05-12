@@ -9,4 +9,5 @@ public interface TodoDAO {
     void updateTodoStatus(int todoId, boolean completed);
     void deleteTodo(int todoId);
     void updateTodoCompleted(TodoDTO todo);
+    void updateTodo(TodoDTO dto);
 }

@@ -34,7 +34,8 @@
                         <input type="checkbox" <c:if test="${todo.completed}">checked</c:if>
                                onclick="toggleTaskAjax(this, ${todo.todoId})" />
                         <span class="task-text <c:if test='${todo.completed}'>task-completed</c:if>">${todo.task}</span>
-                        <button class="delete-btn" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
+                        <button class="edit-btn" title="수정하기" onclick="openEditModal(${todo.todoId}, '${todo.task}')">✏</button>
+                        <button class="delete-btn" title="삭제하기" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
                     </li>
                 </c:if>
             </c:forEach>
@@ -51,7 +52,8 @@
                         <input type="checkbox" <c:if test="${todo.completed}">checked</c:if>
                                onclick="toggleTaskAjax(this, ${todo.todoId})" />
                         <span class="task-text <c:if test='${todo.completed}'>task-completed</c:if>">${todo.task}</span>
-                        <button class="delete-btn" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
+                        <button class="edit-btn" title="수정하기" onclick="openEditModal(${todo.todoId}, '${todo.task}')">✏</button>
+                        <button class="delete-btn" title="삭제하기" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
                     </li>
                 </c:if>
             </c:forEach>
@@ -68,7 +70,8 @@
                         <input type="checkbox" <c:if test="${todo.completed}">checked</c:if>
                                onclick="toggleTaskAjax(this, ${todo.todoId})" />
                         <span class="task-text <c:if test='${todo.completed}'>task-completed</c:if>">${todo.task}</span>
-                        <button class="delete-btn" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
+                        <button class="edit-btn" title="수정하기" onclick="openEditModal(${todo.todoId}, '${todo.task}')">✏</button>
+                        <button class="delete-btn" title="삭제하기" onclick="confirmTodoDelete('${todo.todoId}')">×</button>
                     </li>
                 </c:if>
             </c:forEach>
@@ -83,4 +86,18 @@
 
 </div>
 </body>
+<div id="editModal" class="modal" style="display: none;">
+    <div class="modal-box">
+        <h3>할 일 수정</h3>
+        <form id="editForm" method="post" action="todoUpdate.action">
+            <input type="hidden" name="todoId" id="editTodoId" />
+            <input type="text" name="task" id="editTaskInput" required />
+            <div class="btn-group" style="margin-top: 12px;">
+                <button type="submit" class="btn btn-add">저장</button>
+                <button type="button" class="btn btn-back" onclick="closeEditModal()">취소</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 </html>

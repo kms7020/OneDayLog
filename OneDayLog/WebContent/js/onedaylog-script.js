@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 저장된 테마 상태 가져와 적용
+    // 🌙 저장된 테마 적용
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
         document.body.classList.add("dark-mode");
     }
 
-    // 다크모드 토글 버튼 기능
+    // 🌙 다크모드 토글 버튼
     const toggleBtn = document.getElementById("darkModeToggle");
     if (toggleBtn) {
         toggleBtn.addEventListener("click", function () {
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 현재 메뉴 강조 (선택된 링크에 active 클래스 부여)
+    // ✅ 현재 메뉴 강조
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll(".nav-link");
     navLinks.forEach(link => {
@@ -23,82 +23,74 @@ document.addEventListener("DOMContentLoaded", function () {
             link.classList.add("active");
         }
     });
-});
 
-// 일기 삭제 요청 처리
+    // ✅ Flatpickr 초기화 (서버 날짜 연동 포함)
+    ["#targetDate", "#diaryDate"].forEach(selector => {
+        const input = document.querySelector(selector);
+        if (input) {
+            const defaultDate = input.dataset.defaultDate || 'today';
+
+            const fp = flatpickr(input, {
+                dateFormat: 'Y-m-d',
+                locale: 'ko',
+                defaultDate: defaultDate,
+                disableMobile: true
+            });
+
+            let isOpen = false;
+            input.addEventListener('click', function () {
+                isOpen ? fp.close() : fp.open();
+                isOpen = !isOpen;
+            });
+        }
+    });
+}); // ← ✅ 닫는 괄호가 여기에 반드시 있어야 함!
+
+// ✅ 일기 삭제 처리
 function confirmDelete(diaryId) {
-	  console.log("📌 삭제 버튼 클릭됨. 전달된 diaryId:", diaryId);
+    console.log("📌 삭제 버튼 클릭됨. 전달된 diaryId:", diaryId);
 
-	  if (confirm("정말 삭제하시겠습니까?")) {
-	    const form = document.createElement('form');
-	    form.method = 'POST';
-	    form.action = 'diaryDelete.action';
+    if (confirm("정말 삭제하시겠습니까?")) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'diaryDelete.action';
 
-	    const input = document.createElement('input');
-	    input.type = 'hidden';
-	    input.name = 'diaryId';
-	    input.value = diaryId;
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'diaryId';
+        input.value = diaryId;
 
-	    form.appendChild(input);
-	    document.body.appendChild(form);
-	    form.submit();
-	  }
-	}
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
 
-// 리스트 삭제 요청 처리
+// ✅ 할일 삭제 처리
 function confirmTodoDelete(todoId) {
-	  if (confirm("정말 삭제하시겠습니까?")) {
-	    const form = document.createElement("form");
-	    form.method = "POST";
-	    form.action = "todoDelete.action"; // 실제 요청 경로로 수정
+    if (confirm("정말 삭제하시겠습니까?")) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "todoDelete.action";
 
-	    const input = document.createElement("input");
-	    input.type = "hidden";
-	    input.name = "todoId"; // 컨트롤러가 받을 파라미터 이름과 일치시켜야 함
-	    input.value = todoId;
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "todoId";
+        input.value = todoId;
 
-	    form.appendChild(input);
-	    document.body.appendChild(form);
-	    form.submit();
-	  }
-	}
-
-//Flatpickr JS 초기화 
-document.addEventListener('DOMContentLoaded', function () {
-	  const targetDateInput = document.querySelector('#targetDate');
-	  if (targetDateInput) {
-	    flatpickr(targetDateInput, {
-	      dateFormat: 'Y-m-d',
-	      locale: 'ko',
-	      defaultDate: 'today',
-	      disableMobile: true
-	    });
-	  }
-	});
-
-// toggle 동작을 수동으로 구현
-document.addEventListener('DOMContentLoaded', function () {
-	  const targetDateInput = document.querySelector('#targetDate');
-	  if (targetDateInput) {
-	    const fp = flatpickr(targetDateInput, {
-	      dateFormat: 'Y-m-d',
-	      locale: 'ko',
-	      defaultDate: 'today',
-	      disableMobile: true,
-	      clickOpens: false  // 직접 열고 닫도록 설정
-	    });
-
-	    let isOpen = false;
-
-	    targetDateInput.addEventListener('click', function () {
-	      if (isOpen) {
-	        fp.close();
-	      } else {
-	        fp.open();
-	      }
-	      isOpen = !isOpen;
-	    });
-	  }
-	});
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
 
 
+function openEditModal(todoId, task) {
+    document.getElementById("editTodoId").value = todoId;
+    document.getElementById("editTaskInput").value = task;
+    document.getElementById("editModal").style.display = "flex";
+}
+
+function closeEditModal() {
+    document.getElementById("editModal").style.display = "none";
+}

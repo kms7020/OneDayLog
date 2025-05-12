@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*, java.text.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/view/common/header.jsp" %>
-
 <%
     // 컨트롤러로부터 전달된 Dday 리스트를 가져옴
     List<com.onedaylog.project.dto.DdayDTO> ddayList = 
@@ -73,8 +72,10 @@
     <div class="diary-entry task-text">
 
         <!-- 제목 -->
-        <div class="dday-title" style="font-size: 18px; font-weight: bold; margin-bottom: 6px;">
-            <%= item.getTitle() %>
+        <div class="dday-title" title="수정하기"style="font-size: 18px; font-weight: bold; margin-bottom: 6px;">
+			<a href="ddayEdit.action?ddayId=<%= item.getDdayId() %>" style="text-decoration: none; color: inherit;">
+				<%= item.getTitle() %>
+			</a>
         </div>
 
         <!-- 일정일 -->
@@ -98,7 +99,7 @@
         <!-- 삭제 버튼 -->
         <form action="ddayDelete.action" method="post">
             <input type="hidden" name="ddayId" value="<%= item.getDdayId() %>">
-            <button type="submit" class="delete-btn" title="삭제">x</button>
+            <button type="submit" class="delete-btn" title="삭제하기">x</button>
         </form>
     </div>
 
