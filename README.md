@@ -51,7 +51,7 @@
 - Eclipse
 
 ## 🖼 와이어프레임 초안  
-![와이어프레임]
+![와이어프레임](https://miro.com/app/board/uXjVIcFuTBg=/)
 
 ## 🗂 ERD  
 ![ERD](./img/erd.png)
