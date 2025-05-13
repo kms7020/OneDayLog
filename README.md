@@ -57,4 +57,4 @@
 ![ERD](./img/erd.png)
 
 ## 🎥 시연 영상  
-👉 [YouTube 시연 보기]
+👉 [YouTube 시연 보기](https://youtu.be/EkuanXw5gbM)
