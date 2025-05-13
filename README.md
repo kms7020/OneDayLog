@@ -54,7 +54,7 @@
 ![와이어프레임]
 
 ## 🗂 ERD  
-![ERD]
+![ERD](./img/erd.png)
 
 ## 🎥 시연 영상  
 👉 [YouTube 시연 보기]
