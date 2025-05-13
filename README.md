@@ -47,6 +47,7 @@
 ### 🗃 Infra & Tools
 - Apache Tomcat 9
 - Git / GitHub
+- miro (와이어프레임 설계)
 - ERDCloud (ERD 설계)
 - Eclipse
   
