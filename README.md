@@ -51,7 +51,7 @@
 - Eclipse
 
 ## 🖼 와이어프레임 초안  
-👉 [Miro 와이어프레임 보러가기]([https://miro.com/app/board/uXjVIcFuTBg=/](https://miro.com/app/board/uXjVIcFuTBg=/?share_link_id=816332452623))
+👉 [Miro 와이어프레임 보러가기](https://miro.com/app/board/uXjVIcFuTBg=/?share_link_id=615856206569)
 
 ## 🗂 ERD  
 ![ERD](./img/erd.png)
