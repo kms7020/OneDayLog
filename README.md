@@ -53,6 +53,8 @@
 ## 🗂 ERD  
 ![ERD](./img/erd.png)
 
+📂 [DB 스키마 보기](./sql/onedaylog_database.sql)
+
 ## 🖼 와이어프레임 초안  
 👉 [Miro 와이어프레임 보러가기](https://miro.com/app/board/uXjVIcFuTBg=/?share_link_id=615856206569)
 
