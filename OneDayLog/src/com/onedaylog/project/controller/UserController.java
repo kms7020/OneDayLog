@@ -39,18 +39,30 @@ public class UserController
 	@GetMapping("/main.action")
 	public String mainPage(HttpSession session, Model model)
 	{
-		if (session.getAttribute("user_name") == null)
-		{
-			return "redirect:/preLoginMain.action";
-		}
+	    // ✅ user_name 체크 → 로그인 상태 확인
+	    if (session.getAttribute("user_name") == null)
+	    {
+	        return "redirect:/preLoginMain.action";
+	    }
 
-		int userId = (int) session.getAttribute("user_id");
-		DdayDAO dao = sqlSession.getMapper(DdayDAO.class);
-		List<DdayDTO> upcomingDdays = dao.selectTop3UpcomingDday(userId);
+	    // ✅ loginUser가 세션에 없으면 user_id 기준으로 다시 조회해서 넣어줌
+	    if (session.getAttribute("loginUser") == null) {
+	        Integer userId = (Integer) session.getAttribute("user_id");
+	        if (userId != null) {
+	            UserDAO userDAO = sqlSession.getMapper(UserDAO.class);
+	            UserDTO loginUser = userDAO.selectUserById(userId);
+	            session.setAttribute("loginUser", loginUser);
+	        }
+	    }
 
-		model.addAttribute("upcomingDdays", upcomingDdays);
-		return "/main/MainPage";
+	    int userId = (int) session.getAttribute("user_id");
+	    DdayDAO dao = sqlSession.getMapper(DdayDAO.class);
+	    List<DdayDTO> upcomingDdays = dao.selectTop3UpcomingDday(userId);
+
+	    model.addAttribute("upcomingDdays", upcomingDdays);
+	    return "/main/MainPage";
 	}
+
 
 	@GetMapping("/preLoginMain.action")
 	public String preLoginMain()

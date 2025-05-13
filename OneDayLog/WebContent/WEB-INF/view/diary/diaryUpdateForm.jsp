@@ -43,9 +43,9 @@
 			  id="diaryDate"
 			  name="diaryDate"
 			  class="styled-date"
-			  value="<fmt:formatDate value='${diary.diaryDate}' pattern='yyyy-MM-dd' />"
-			  data-default-date="<fmt:formatDate value='${diary.diaryDate}' pattern='yyyy-MM-dd' />"
-			  placeholder="날짜 선택"
+			  value="<fmt:formatDate value='${diary.diaryDate}' pattern='yyyy-MM-dd HH:mm:ss' />"
+			  data-default-date="<fmt:formatDate value='${diary.diaryDate}' pattern='yyyy-MM-dd HH:mm:ss' />"
+			  placeholder="날짜 및 시간 선택"
 			  required
 			/>
 		</div>

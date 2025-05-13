@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import com.onedaylog.project.dao.DiaryDAO;
+import com.onedaylog.project.dao.UserDAO;
 import com.onedaylog.project.dto.DiaryDTO;
 import com.onedaylog.project.dto.UserDTO;
 
@@ -33,14 +34,26 @@ public class DiaryController {
                             HttpSession session,
                             Model model) {
         UserDTO user = (UserDTO) session.getAttribute("loginUser");
+
+        // ✅ loginUser 없을 경우, user_id로 복구 시도
         if (user == null) {
+            Integer userId = (Integer) session.getAttribute("user_id");
+            if (userId != null) {
+                UserDAO userDAO = sqlSession.getMapper(UserDAO.class);
+                user = userDAO.selectUserById(userId);
+                session.setAttribute("loginUser", user);
+            }
+        }
+
+        // 여전히 없음 = 로그인 상태 아님
+        if (user == null) {
+            System.out.println("❌ 세션에 loginUser 없음 - 로그인 페이지로 이동");
             return "redirect:/login.action";
         }
 
         int userId = user.getUserId();
         DiaryDAO dao = sqlSession.getMapper(DiaryDAO.class);
 
-        // 정렬 기준 전달
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("userId", userId);
         paramMap.put("order", order);
@@ -50,6 +63,12 @@ public class DiaryController {
         return "diary/diaryList";
     }
 
+
+
+    @GetMapping("/diaryWrite.action")
+    public String diaryWriteForm() {
+        return "diary/diaryWrite";  // JSP 경로 예시
+    }
 
     @PostMapping("/diaryWrite.action")
     public String diaryWriteSubmit(@RequestParam("content") String content, HttpSession session) {
@@ -103,10 +122,11 @@ public class DiaryController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         sdf.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
+
 
 
 }

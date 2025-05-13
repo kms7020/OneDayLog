@@ -111,7 +111,7 @@ input[type="password"] {
     font-size: 16px !important;
     word-break: break-word;
     overflow-wrap: anywhere;
-    /* font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important; */
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif !important;
 }
 
 .task-completed {

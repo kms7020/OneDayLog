@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const defaultDate = input.dataset.defaultDate || 'today';
 
             const fp = flatpickr(input, {
-                dateFormat: 'Y-m-d',
+            	dateFormat: 'Y-m-d H:i',
+                enableTime: true,
+                time_24hr: true,
                 locale: 'ko',
                 defaultDate: defaultDate,
                 disableMobile: true
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
-}); // ← ✅ 닫는 괄호가 여기에 반드시 있어야 함!
+}); 
 
 // ✅ 일기 삭제 처리
 function confirmDelete(diaryId) {
