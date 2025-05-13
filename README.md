@@ -49,12 +49,12 @@
 - Git / GitHub
 - ERDCloud (ERD 설계)
 - Eclipse
+- 
+## 🗂 ERD  
+![ERD](./img/erd.png)
 
 ## 🖼 와이어프레임 초안  
 👉 [Miro 와이어프레임 보러가기](https://miro.com/app/board/uXjVIcFuTBg=/?share_link_id=615856206569)
-
-## 🗂 ERD  
-![ERD](./img/erd.png)
 
 ## 🎥 시연 영상  
 👉 [YouTube 시연 보기](https://youtu.be/EkuanXw5gbM)
