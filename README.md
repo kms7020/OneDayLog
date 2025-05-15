@@ -76,8 +76,8 @@
 ### 🗂 DB 스키마  
 📂 [DB 스키마 보기](./sql/onedaylog_database.sql)
 
-### 🖼 와이어프레임  
-👉 [Miro 와이어프레임 보러가기](https://miro.com/app/board/uXjVIcFuTBg=/?share_link_id=615856206569)
+### 🖼 와이어프레임 / 유스케이스 다이어그램  
+👉 [Miro 와이어프레임 / 유스케이스 다이어그램 보러가기](https://miro.com/app/board/uXjVIcFuTBg=/?share_link_id=615856206569)
 
 ### 🎥 시연 영상  
 👉 [YouTube 시연 보기](https://youtu.be/EkuanXw5gbM)
