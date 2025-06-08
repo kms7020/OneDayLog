@@ -55,12 +55,11 @@
 ### 🌐 Frontend
 - JSP / JSTL
 - HTML5 / CSS3
-- JavaScript (Vanilla)
-- Bootstrap 5
+- JavaScript 
 - Flatpickr (날짜 선택)
 
 ### 🛠 Infra & Tools
-- Apache Tomcat 9
+- Apache Tomcat 8.5
 - Git / GitHub
 - ERDCloud (ERD 설계)
 - Miro (와이어프레임 설계)
